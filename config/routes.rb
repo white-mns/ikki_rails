@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :productions
   resources :statuses
   resources :proper_names
   resources :names
