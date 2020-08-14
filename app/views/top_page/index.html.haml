@@ -1,7 +1,9 @@
 %h1 IkkiFantasyデータ小屋
 %p
   このサイトでは過去に運営されていた定期更新ゲーム
-  %a{:href => "http://lisge.com/", :target => "_blank"} Ikki Fantasy
+  %a{href: "http://lisge.com/", target: "_blank"} Ikki Fantasy
+  %span{style: "font-size:small;"}
+    (本家サイト消滅によりリンク先は製作者様サイト)
   を解析して得られる情報を扱っています。
 %br
 %p= top_text(@latest_result, @latest_generate, @uploaded_result)
@@ -14,6 +16,8 @@
         %ul
           %li 個人データ
           %ul  
+            %li= link_to "キャラクター名・PL名一覧", names_path
+            %li= link_to "ステータス一覧", statuses_path
       .col-md-6
         %ul
           %li 結果データ

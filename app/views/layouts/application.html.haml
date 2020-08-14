@@ -25,7 +25,9 @@
                 個人データ
                 %span.caret
               .dropdown-menu
+                = link_to "キャラクター名・PL名一覧", names_path, class: "dropdown-item"
                 .dropdown-divider
+                = link_to "ステータス一覧", statuses_path, class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 結果データ
