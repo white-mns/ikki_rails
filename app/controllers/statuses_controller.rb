@@ -7,8 +7,8 @@ class StatusesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Status.notnil().includes(:pc_name).search(params[:q]).result.hit_count()
-    @search	= Status.notnil().includes(:pc_name).page(params[:page]).search(params[:q])
+    @count	= Status.notnil().includes(:pc_name, :guardian).search(params[:q]).result.hit_count()
+    @search	= Status.notnil().includes(:pc_name, :guardian).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @statuses	= @search.result.per(50)
   end
