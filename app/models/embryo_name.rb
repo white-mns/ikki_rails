@@ -1,0 +1,2 @@
+class EmbryoName < ApplicationRecord
+end
