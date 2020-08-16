@@ -29,12 +29,19 @@
                 .dropdown-divider
                 = link_to "ステータス一覧", statuses_path, class: "dropdown-item"
                 = link_to "生産Lv一覧", productions_path, class: "dropdown-item"
+                = link_to "所持エンブリオ一覧", embryos_path, class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 結果データ
                 %span.caret
               .dropdown-menu
                 .dropdown-divider
+            %li.nav-item.dropdown
+              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+                その他データ
+                %span.caret
+              .dropdown-menu
+                = link_to "エンブリオ一覧", embryo_names_path, class: "dropdown-item"
 
     .container
       .row

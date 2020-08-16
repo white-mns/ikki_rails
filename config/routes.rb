@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :embryos
   resources :embryo_names
   resources :productions
   resources :statuses

@@ -19,9 +19,15 @@
             %li= link_to "キャラクター名・PL名一覧", names_path
             %li= link_to "ステータス一覧", statuses_path
             %li= link_to "生産Lv一覧", productions_path
+            %li= link_to "所持エンブリオ一覧", embryos_path
       .col-md-6
         %ul
           %li 結果データ
+      .col-md-6
+        %ul
+          %li その他データ
+          %ul  
+            %li= link_to "エンブリオ一覧", embryo_names_path
 
 .card.top
   .card-body

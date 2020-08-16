@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_15_013928) do
+ActiveRecord::Schema.define(version: 2020_08_15_235240) do
 
   create_table "embryo_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "embryo_id"
@@ -19,6 +19,23 @@ ActiveRecord::Schema.define(version: 2020_08_15_013928) do
     t.datetime "updated_at", null: false
     t.index ["embryo_id"], name: "index_embryo_names_on_embryo_id"
     t.index ["name"], name: "index_embryo_names_on_name"
+  end
+
+  create_table "embryos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "order"
+    t.integer "embryo_id"
+    t.integer "is_physics"
+    t.integer "lv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["embryo_id"], name: "index_embryos_on_embryo_id"
+    t.index ["is_physics"], name: "index_embryos_on_is_physics"
+    t.index ["lv"], name: "index_embryos_on_lv"
+    t.index ["order"], name: "index_embryos_on_order"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
