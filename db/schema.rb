@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_15_235240) do
+ActiveRecord::Schema.define(version: 2020_08_17_062528) do
 
   create_table "embryo_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "embryo_id"
@@ -73,6 +73,42 @@ ActiveRecord::Schema.define(version: 2020_08_15_235240) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_proper_names_on_name"
     t.index ["proper_id"], name: "index_proper_names_on_proper_id"
+  end
+
+  create_table "skill_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "skill_id"
+    t.string "name"
+    t.integer "embryo_id"
+    t.integer "is_physics"
+    t.integer "lv"
+    t.integer "sp"
+    t.integer "gift_id"
+    t.integer "gp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["embryo_id"], name: "index_skill_data_on_embryo_id"
+    t.index ["gift_id"], name: "index_skill_data_on_gift_id"
+    t.index ["gp"], name: "index_skill_data_on_gp"
+    t.index ["is_physics"], name: "index_skill_data_on_is_physics"
+    t.index ["lv"], name: "index_skill_data_on_lv"
+    t.index ["name"], name: "index_skill_data_on_name"
+    t.index ["skill_id"], name: "index_skill_data_on_skill_id"
+    t.index ["sp"], name: "index_skill_data_on_sp"
+  end
+
+  create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "order"
+    t.integer "skill_id"
+    t.integer "gift_open"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gift_open"], name: "index_skills_on_gift_open"
+    t.index ["order"], name: "index_skills_on_order"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["skill_id"], name: "index_skills_on_skill_id"
   end
 
   create_table "statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

@@ -7,5 +7,6 @@ class ApplicationController < ActionController::Base
         @placeholder["Skill"]  = "例）タックル/\"ミサイル\""
         @placeholder["Item"]   = "例）武器/\"防具\""
         @placeholder["Embryo"]   = "例）メイド長/\"メイド\""
+        @placeholder["Gift"]   = "例）不滅/\"反撃\""
     end
 end

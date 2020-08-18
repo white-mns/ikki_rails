@@ -37,7 +37,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エンブリオ", params_name: "embryo_form", placeholder: "Embryo", colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "守護者", params_name: "world_form", 
+        - td_form(f, @form_params, @placeholder,                                      params_name: "world_form", 
                     checkboxes: [{label: "物理", params_name: "embryo_physics", class_name: "after_space"},
                                  {label: "魔法", params_name: "embryo_magic"}])
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Lv", params_name: "lv_form", placeholder: "Number")

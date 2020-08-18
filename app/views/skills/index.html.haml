@@ -1,0 +1,112 @@
+- @page_title = "所持エンブリオ・スキル一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エンブリオ", params_name: "embryo_form", placeholder: "Embryo")
+        - td_form(f, @form_params, @placeholder,                                      params_name: "world_form", 
+                    checkboxes: [{label: "物理", params_name: "embryo_physics", class_name: "after_space"},
+                                 {label: "魔法", params_name: "embryo_magic"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "エンブリオLv", params_name: "embryo_lv_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_skill",
+                    label: {open: "スキル情報を表示する", close: "スキル情報を表示しない"}, base_first: true)
+    %tbody
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル名", params_name: "skill_form", placeholder: "Skill", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "習得Lv", params_name: "lv_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "SP", params_name: "sp_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "ギフト", params_name: "gift_form", placeholder: "Gift")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "GP", params_name: "gp_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                                        params_name: "world_form", colspan: 3,
+                    checkboxes: [{label: "入手済", params_name: "gift_open", class_name: "after_space"},
+                                 {label: "未入手", params_name: "gift_none"}])
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@skills)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :embryo_embryo_id, "エンブリオ", default_order: :desc)
+      %th= sort_link(@search, :is_physics, "物魔", default_order: :desc)
+      %th= sort_link(@search, :embryo_lv, "Lv", default_order: :desc)
+      - if @form_params["show_skill"] == "1"
+        %th.sep= sort_link(@search, :skill_lv, "習得Lv", default_order: :desc)
+        %th= sort_link(@search, :skill_id, "スキル", default_order: :desc)
+        %th= sort_link(@search, :skill_gift_id, "ギフト", default_order: :desc)
+        %th= sort_link(@search, :skill_gp, "GP", default_order: :desc)
+        %th= sort_link(@search, :gift_open, "ギフト入手", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @skills.each do |skill|
+      %tr
+        %td= skill.result_no
+        %td= pc_name_text(skill.e_no, skill.pc_name)
+        %td.sep= skill.embryo.embryo.name if skill.embryo && skill.embryo.embryo
+        %td
+          - is_physics_img(skill.skill.is_physics) if skill.skill
+          = is_physics_text(skill.skill.is_physics) if skill.skill
+        %td= skill.embryo.lv if skill.embryo
+        - if @form_params["show_skill"] == "1"
+          %td.sep= skill.skill.lv if skill.skill
+          %td= skill.skill.name if skill.skill
+          %td{class: "#{ gift_font(skill.gift_open) }" }= skill.skill.gift.name if skill.skill && skill.skill.gift
+          %td{class: "#{ gift_font(skill.gift_open) }" }= skill.skill.gp if skill.skill
+          %td= gift_open_text(skill.gift_open)
+        %td.sep= character_link(skill.e_no)
+        %td= character_old_link(@latest_result, skill.e_no, skill.result_no, skill.generate_no)
+= paginate(@skills)

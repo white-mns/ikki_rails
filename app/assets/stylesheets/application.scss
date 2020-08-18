@@ -177,6 +177,11 @@ td.sign{
     font-size: x-large;
 }
 
+td.gift_none{
+    color: #bbb;
+    text-decoration: line-through;
+}
+
 th.sep,td.sep{
     border-left: 3px solid $table-border-color;
 }

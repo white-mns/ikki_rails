@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :skills
+  resources :skill_data
   resources :embryos
   resources :embryo_names
   resources :productions

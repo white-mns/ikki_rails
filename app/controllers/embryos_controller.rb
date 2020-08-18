@@ -33,6 +33,7 @@ class EmbryosController < ApplicationController
     params_to_form(params, @form_params, column_name: "lv", params_name: "lv_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "embryo_name", params_name: "embryo_form", type: "text")
+    params_to_form(params, @form_params, column_name: "skill_name", params_name: "skill_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "is_physics_eq_any",
                              checkboxes: [{params_name: "embryo_physics", value: 1, first_checked: false},
