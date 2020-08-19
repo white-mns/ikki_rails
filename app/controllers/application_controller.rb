@@ -8,5 +8,7 @@ class ApplicationController < ActionController::Base
         @placeholder["Item"]   = "例）武器/\"防具\""
         @placeholder["Embryo"]   = "例）メイド長/\"メイド\""
         @placeholder["Gift"]   = "例）不滅/\"反撃\""
+        @placeholder["ItemKind"]   = "例）材料/\"武器\""
+        @placeholder["Fuka"]   = "例）活力/\"回避撃\""
     end
 end

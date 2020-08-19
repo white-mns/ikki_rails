@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_062528) do
+ActiveRecord::Schema.define(version: 2020_08_19_064543) do
 
   create_table "embryo_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "embryo_id"
@@ -36,6 +36,34 @@ ActiveRecord::Schema.define(version: 2020_08_17_062528) do
     t.index ["lv"], name: "index_embryos_on_lv"
     t.index ["order"], name: "index_embryos_on_order"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "i_no"
+    t.string "name"
+    t.integer "kind_id"
+    t.integer "strength"
+    t.integer "effect_1_id"
+    t.integer "effect_1_value"
+    t.integer "effect_2_id"
+    t.integer "effect_2_value"
+    t.integer "effect_3_id"
+    t.integer "effect_3_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["effect_1_id"], name: "index_items_on_effect_1_id"
+    t.index ["effect_1_value"], name: "index_items_on_effect_1_value"
+    t.index ["effect_2_id"], name: "index_items_on_effect_2_id"
+    t.index ["effect_2_value"], name: "index_items_on_effect_2_value"
+    t.index ["effect_3_id"], name: "index_items_on_effect_3_id"
+    t.index ["effect_3_value"], name: "index_items_on_effect_3_value"
+    t.index ["kind_id"], name: "index_items_on_kind_id"
+    t.index ["name"], name: "index_items_on_name"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["strength"], name: "index_items_on_strength"
   end
 
   create_table "names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
