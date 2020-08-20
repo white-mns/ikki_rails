@@ -87,6 +87,7 @@
       - if @form_params["show_skill"] == "1"
         %th.sep= sort_link(@search, :skill_lv, "習得Lv", default_order: :desc)
         %th= sort_link(@search, :skill_id, "スキル", default_order: :desc)
+        %th= sort_link(@search, :skill_sp, "SP", default_order: :desc)
         %th= sort_link(@search, :skill_gift_id, "ギフト", default_order: :desc)
         %th= sort_link(@search, :skill_gp, "GP", default_order: :desc)
         %th= sort_link(@search, :gift_open, "ギフト入手", default_order: :desc)
@@ -104,8 +105,9 @@
         - if @form_params["show_skill"] == "1"
           %td.sep= skill.skill.lv if skill.skill
           %td= skill.skill.name if skill.skill
+          %td= skill.skill.sp if skill.skill
           %td{class: "#{ gift_font(skill.gift_open) }" }= skill.skill.gift.name if skill.skill && skill.skill.gift
-          %td{class: "#{ gift_font(skill.gift_open) }" }= skill.skill.gp if skill.skill
+          %td{class: "#{ gift_font(skill.gift_open) }" }= skill.skill.gp if skill.skill && skill.skill.gp > 0
           %td= gift_open_text(skill.gift_open)
         %td.sep= character_link(skill.e_no)
         %td= character_old_link(@latest_result, skill.e_no, skill.result_no, skill.generate_no)

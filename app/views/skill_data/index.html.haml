@@ -69,8 +69,8 @@
       %th= sort_link(@search, :embryo_id, "エンブリオ", default_order: :desc)
       - if @form_params["show_skill"] == "1"
         %th= sort_link(@search, :is_physics, "物魔", default_order: :desc)
-        %th.sep= sort_link(@search, :name, "スキル", default_order: :desc)
-        %th= sort_link(@search, :lv, "LV", default_order: :desc)
+        %th.sep= sort_link(@search, :lv, "習得LV", default_order: :desc)
+        %th= sort_link(@search, :name, "スキル", default_order: :desc)
         %th= sort_link(@search, :sp, "SP", default_order: :desc)
         %th= sort_link(@search, :gift_id, "ギフト", default_order: :desc)
         %th= sort_link(@search, :gp, "GP", default_order: :desc)
@@ -82,9 +82,9 @@
           %td
             - is_physics_img(skill_datum.is_physics)
             = is_physics_text(skill_datum.is_physics)
-          %td.sep= skill_datum.name
-          %td= skill_datum.lv
+          %td.sep= skill_datum.lv
+          %td= skill_datum.name
           %td= skill_datum.sp
           %td= skill_datum.gift.name if skill_datum.gift
-          %td= skill_datum.gp
+          %td= skill_datum.gp if skill_datum.gp > 0
 = paginate(@skill_data)
