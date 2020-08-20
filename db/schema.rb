@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_002259) do
+ActiveRecord::Schema.define(version: 2020_08_20_005916) do
 
   create_table "embryo_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "embryo_id"
@@ -75,6 +75,16 @@ ActiveRecord::Schema.define(version: 2020_08_20_002259) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "new_embryos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "embryo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["embryo_id"], name: "index_new_embryos_on_embryo_id"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
   end
 
   create_table "new_item_fukas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
