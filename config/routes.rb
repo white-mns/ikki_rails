@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :new_item_fukas
   resources :new_items
   resources :items
   resources :skills
