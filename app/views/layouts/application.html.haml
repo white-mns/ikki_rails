@@ -40,6 +40,12 @@
                 .dropdown-divider
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+                新出データ
+                %span.caret
+              .dropdown-menu
+                = link_to "新出材料一覧", new_items_path, class: "dropdown-item"
+            %li.nav-item.dropdown
+              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 その他データ
                 %span.caret
               .dropdown-menu
