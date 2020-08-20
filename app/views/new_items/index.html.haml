@@ -49,11 +49,11 @@
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th.sep= sort_link(@search, :name, "アイテム名", default_order: :desc)
-      %th.sep= sort_link(@search, :item_strength, "強さ", default_order: :desc)
+      %th= sort_link(@search, :item_strength, "強さ", default_order: :desc)
   %tbody
     - @new_items.each do |new_item|
       %tr
         %td= new_item.result_no
         %td.sep= detail_new_item_link(new_item)
-        %td.sep= new_item.item.strength if new_item.item
+        %td= new_item.item.strength if new_item.item
 = paginate(@new_items)

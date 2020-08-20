@@ -53,5 +53,5 @@
     - @new_embryos.each do |new_embryo|
       %tr
         %td= new_embryo.result_no
-        %td.sep= detail_new_embryo_link(new_embryo)
+        %td= detail_new_embryo_link(new_embryo)
 = paginate(@new_embryos)

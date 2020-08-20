@@ -1,0 +1,102 @@
+- @page_title = "新出スキル一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル", params_name: "skill_form", placeholder: "Skill")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_embryo",
+                    label: {open: "エンブリオを表示する", close: "エンブリオを表示しない"}, base_first: true)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エンブリオ", params_name: "embryo_form", placeholder: "Embryo")
+        - td_form(f, @form_params, @placeholder,                                      params_name: "is_physics_form", 
+                    checkboxes: [{label: "物理", params_name: "embryo_physics", class_name: "after_space"},
+                                 {label: "魔法", params_name: "embryo_magic"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_skill",
+                    label: {open: "スキル情報を表示する", close: "スキル情報を表示しない"}, base_first: true)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "習得Lv", params_name: "lv_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "SP", params_name: "sp_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "ギフト", params_name: "gift_form", placeholder: "Gift")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "GP", params_name: "gp_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@new_skills)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      - if @form_params["show_embryo"] == "1"
+        %th.sep= sort_link(@search, :skill_embryo_id, "エンブリオ", default_order: :desc)
+        %th= sort_link(@search, :skill_is_physics, "物魔", default_order: :desc)
+        %th= sort_link(@search, :new_skill_skill_lv, "習得Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :skill_id, "スキル", default_order: :desc)
+      - if @form_params["show_skill"] == "1"
+        %th= sort_link(@search, :new_skill_skill_sp, "SP", default_order: :desc)
+        %th= sort_link(@search, :new_skill_skill_gift_id, "ギフト", default_order: :desc)
+        %th= sort_link(@search, :new_skill_skill_gp, "GP", default_order: :desc)
+  %tbody
+    - @new_skills.each do |new_skill|
+      %tr
+        %td= new_skill.result_no
+        - if @form_params["show_embryo"] == "1"
+          %td.sep= new_skill.skill.embryo.name if new_skill.skill && new_skill.skill.embryo
+          %td
+            - is_physics_img(new_skill.skill.is_physics) if new_skill.skill
+            = is_physics_text(new_skill.skill.is_physics) if new_skill.skill
+          %td= new_skill.skill.lv if new_skill.skill
+        %td.sep= detail_new_skill_link(new_skill)
+        - if @form_params["show_skill"] == "1"
+          %td= new_skill.skill.sp if new_skill.skill
+          %td= new_skill.skill.gift.name if new_skill.skill && new_skill.skill.gift
+          %td= new_skill.skill.gp if new_skill.skill && new_skill.skill.gp > 0
+= paginate(@new_skills)
