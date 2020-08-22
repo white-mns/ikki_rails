@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_015620) do
+ActiveRecord::Schema.define(version: 2020_08_22_222634) do
 
   create_table "embryo_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "embryo_id"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 2020_08_20_015620) do
     t.index ["is_physics"], name: "index_embryos_on_is_physics"
     t.index ["lv"], name: "index_embryos_on_lv"
     t.index ["order"], name: "index_embryos_on_order"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "init_equips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "i_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 

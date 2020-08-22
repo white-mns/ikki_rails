@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :init_equips
   resources :new_skills
   resources :new_embryos
   resources :new_item_fukas

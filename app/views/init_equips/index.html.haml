@@ -1,4 +1,4 @@
-- @page_title = "所持アイテム一覧"
+- @page_title = "初期装備一覧"
 %h1= @page_title
 
 .card.desc
@@ -62,6 +62,10 @@
 
     - #==========================================================================================================================
     %tbody
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                                      params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "ルリアンナ材、ラルフ鉱から作製した装備を除外する", params_name: "ruri_raru_ng"}])
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
@@ -69,7 +73,7 @@
           - search_submit_button
 
 
-= paginate(@items)
+= paginate(@init_equips)
 %br
 ヒット数：#{ @count }件
 %br
@@ -80,33 +84,33 @@
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      %th.sep= sort_link(@search, :name, "アイテム名", default_order: :desc)
-      %th= sort_link(@search, :kind_id, "種類", default_order: :desc)
-      %th= sort_link(@search, :strength, "強さ", default_order: :desc)
-      %th.sep= sort_link(@search, :effect_1_id, "付加1", default_order: :desc)
-      %th= sort_link(@search, :effect_1_value, "Lv", default_order: :desc)
-      %th.sep= sort_link(@search, :effect_2_id, "付加2", default_order: :desc)
-      %th= sort_link(@search, :effect_2_value, "Lv", default_order: :desc)
-      %th.sep= sort_link(@search, :effect_3_id, "付加3", default_order: :desc)
-      %th= sort_link(@search, :effect_3_value, "Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :item_name, "アイテム名", default_order: :desc)
+      %th= sort_link(@search, :item_kind_id, "種類", default_order: :desc)
+      %th= sort_link(@search, :item_strength, "強さ", default_order: :desc)
+      %th.sep= sort_link(@search, :item_effect_1_id, "付加1", default_order: :desc)
+      %th= sort_link(@search, :item_effect_1_value, "Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :item_effect_2_id, "付加2", default_order: :desc)
+      %th= sort_link(@search, :item_effect_2_value, "Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :item_effect_3_id, "付加3", default_order: :desc)
+      %th= sort_link(@search, :item_effect_3_value, "Lv", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
-    - @items.each do |item|
+    - @init_equips.each do |init_equip|
       %tr
-        %td= item.result_no
-        %td= pc_name_text(item.e_no, item.pc_name)
-        %td.sep= item.name
-        %td= item.kind.name if item.kind
-        %td= item.strength
+        %td= init_equip.result_no
+        %td= pc_name_text(init_equip.e_no, init_equip.pc_name)
+        %td.sep= init_equip.item.name
+        %td= init_equip.item.kind.name if init_equip.item.kind
+        %td= init_equip.item.strength
         %td.sep{colspan: 2}
-          = item.effect_1.name if item.effect_1
-          = item.effect_1_value if item.effect_1_value > 0
+          = init_equip.item.effect_1.name if init_equip.item.effect_1
+          = init_equip.item.effect_1_value if init_equip.item.effect_1_value > 0
         %td.sep{colspan: 2}
-          = item.effect_2.name if item.effect_2
-          = item.effect_2_value if item.effect_2_value > 0
+          = init_equip.item.effect_2.name if init_equip.item.effect_2
+          = init_equip.item.effect_2_value if init_equip.item.effect_2_value > 0
         %td.sep{colspan: 2}
-          = item.effect_3.name if item.effect_3
-          = item.effect_3_value if item.effect_3_value > 0
-        %td= character_link(item.e_no)
-        %td.sep= character_old_link(@latest_result, item.e_no, item.result_no, item.generate_no)
-= paginate(@items)
+          = init_equip.item.effect_3.name if init_equip.item.effect_3
+          = init_equip.item.effect_3_value if init_equip.item.effect_3_value > 0
+        %td.sep= character_link(init_equip.e_no)
+        %td= character_old_link(@latest_result, init_equip.e_no, init_equip.result_no, init_equip.generate_no)
+= paginate(@init_equips)
