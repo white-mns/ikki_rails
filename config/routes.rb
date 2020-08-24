@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "current_area/totals",  :to => "current_areas#total",  :as => "current_area_totals"
   resources :current_areas
   resources :area_data
   resources :init_equips

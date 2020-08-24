@@ -1,4 +1,4 @@
-- @page_title = "現在地一覧"
+- @page_title = "エリア進行度別 人数一覧"
 %h1= @page_title
 
 .card.desc
@@ -15,7 +15,7 @@
         - act_desc(false)
     #example.closed
       = render "layouts/input_desc"
-= search_form_for @search do |f|
+= search_form_for @search, url:current_area_totals_path do |f|
   %table.search_toggle.table.table-striped.table-bordered.table-hover
     %tbody.pointer
       %tr
@@ -30,10 +30,6 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
-      %tr
-        %td.indent
         - td_form(f, @form_params, @placeholder,  label: "地形", params_name: "level_form", colspan: 3,
                     checkboxes: [{label: "平原", params_name: "level_1", class_name: "after_space"},
                                  {label: "水辺", params_name: "level_2", class_name: "after_space"},
@@ -46,8 +42,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エリア", params_name: "name_form", placeholder: "Area", colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "進攻度", params_name: "advance_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "好戦度", params_name: "bellicosity_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "好戦度", params_name: "bellicosity_form", placeholder: "Number", colspan: 3)
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
@@ -55,7 +50,6 @@
           - search_submit_button
 
 
-= paginate(@current_areas)
 %br
 ヒット数：#{ @count }件
 %br
@@ -64,22 +58,31 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       %th= sort_link(@search, :area_level, "地形", default_order: :desc)
       %th= sort_link(@search, :area_id, "エリア", default_order: :desc)
-      %th= sort_link(@search, :advance, "進攻度", default_order: :desc)
-      %th= sort_link(@search, :bellicosity, "好戦度", default_order: :desc)
-      %th.sep{colspan: "2"} 結果リンク
+      %th= 1
+      %th= 2
+      %th= 3
+      %th= 4
+      %th= 5
+      %th= 6
+      %th= 7
+      %th= 8
+      %th= 9
+      %th= 10
   %tbody
-    - @current_areas.each do |current_area|
+    - @areas.each do |area|
       %tr
-        %td= current_area.result_no
-        %td= pc_name_text(current_area.e_no, current_area.pc_name)
-        %td= area_level_text(current_area.area) if current_area.area
-        %td= current_area.area.name if current_area.area
-        %td= current_area.advance
-        %td= current_area.bellicosity
-        %td.sep= character_link(current_area.e_no)
-        %td= character_old_link(@latest_result, current_area.e_no, current_area.result_no, current_area.generate_no)
-= paginate(@current_areas)
+        %td= area_level_text(area.area) if area.area
+        %td= area.area.name if area.area
+        %td= area_total_link(area.result_no, area.area, 1, @current_areas) 
+        %td= area_total_link(area.result_no, area.area, 2, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 3, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 4, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 5, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 6, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 7, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 8, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 9, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 10, @current_areas)
+

@@ -13,6 +13,23 @@ class CurrentAreasController < ApplicationController
     @current_areas	= @search.result.per(50)
   end
 
+  # GET /current_areas
+  def total
+    placeholder_set
+    param_set
+
+    @count	= CurrentArea.notnil().includes(:pc_name, :area).search(params[:q]).result.hit_count()
+
+    @area_search = CurrentArea.notnil().includes(:pc_name, :area).group(:area_id).search(params[:q])
+    @area_search.sorts = "area_id asc" if @area_search.sorts.empty?
+    @areas	= @area_search.result
+
+    @search	= CurrentArea.notnil().includes(:pc_name, :area).search(params[:q])
+    @search.sorts = "area_id asc" if @search.sorts.empty?
+    @current_areas	= @search.result.area_total()
+  end
+
+
   def param_set
     @form_params = {}
 
