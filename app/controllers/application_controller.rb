@@ -10,5 +10,6 @@ class ApplicationController < ActionController::Base
         @placeholder["Gift"]   = "例）不滅/\"反撃\""
         @placeholder["ItemKind"]   = "例）材料/\"武器\""
         @placeholder["Fuka"]   = "例）活力/\"回避撃\""
+        @placeholder["Area"]   = "例）広庭/星屑の小川"
     end
 end

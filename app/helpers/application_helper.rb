@@ -148,19 +148,10 @@ module ApplicationHelper
         end
     end
 
-
-    def all_assembly_text(assembly)
-        if !assembly then
-            return
-        end
-
-        assembly_text = ""
-
-        assembly.each do |parts|
-          assembly_text += parts.orig_name_name.name + "、" if parts.orig_name_name
-        end
-
-        assembly_text.chop()
+    def area_level_text(area)
+        if !area then return end
+        text = ["","平原","水辺","砂地","城内","森林","山岳"]
+        return text[area.level]
     end
 
 end

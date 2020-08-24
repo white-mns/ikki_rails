@@ -1,0 +1,2 @@
+class AreaDatum < ApplicationRecord
+end
