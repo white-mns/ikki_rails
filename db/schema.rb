@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_23_234455) do
+ActiveRecord::Schema.define(version: 2020_08_24_003808) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -21,6 +21,22 @@ ActiveRecord::Schema.define(version: 2020_08_23_234455) do
     t.index ["area_id"], name: "index_area_data_on_area_id"
     t.index ["level"], name: "index_area_data_on_level"
     t.index ["name"], name: "index_area_data_on_name"
+  end
+
+  create_table "current_areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "area_id"
+    t.integer "advance"
+    t.integer "bellicosity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["advance"], name: "index_current_areas_on_advance"
+    t.index ["area_id"], name: "index_current_areas_on_area_id"
+    t.index ["bellicosity"], name: "index_current_areas_on_bellicosity"
+    t.index ["result_no", "area_id", "advance"], name: "resultno_areaid_advance"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "embryo_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
