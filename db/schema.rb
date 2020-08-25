@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_073436) do
+ActiveRecord::Schema.define(version: 2020_08_25_134514) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -152,6 +152,19 @@ ActiveRecord::Schema.define(version: 2020_08_25_073436) do
     t.datetime "updated_at", null: false
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
     t.index ["skill_id"], name: "index_new_skills_on_skill_id"
+  end
+
+  create_table "next_battle_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "is_boss"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_next_battle_enemies_on_enemy_id"
+    t.index ["is_boss"], name: "index_next_battle_enemies_on_is_boss"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 
   create_table "parties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

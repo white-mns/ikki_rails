@@ -186,4 +186,26 @@ module ApplicationHelper
             haml_tag :br
         end
     end
+
+    def is_boss_text(object)
+        if !object then 
+            return
+        end
+
+        if object.is_boss == 0 then ""
+        elsif object.is_boss == 1 then "○"
+        else "？"
+        end
+    end
+
+    def duel_type_text(object)
+        if !object then 
+            return
+        end
+
+        if object.battle_type == 0 then "練習"
+        elsif object.battle_type == 1 then "デュエル"
+        else "？"
+        end
+    end
 end
