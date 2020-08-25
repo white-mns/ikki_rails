@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_032230) do
+ActiveRecord::Schema.define(version: 2020_08_25_073436) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -165,6 +165,21 @@ ActiveRecord::Schema.define(version: 2020_08_25_032230) do
     t.index ["party_no"], name: "index_parties_on_party_no"
     t.index ["party_type"], name: "index_parties_on_party_type"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "party_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "party_type"
+    t.string "name"
+    t.integer "member_num"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_num"], name: "index_party_infos_on_member_num"
+    t.index ["name"], name: "index_party_infos_on_name"
+    t.index ["party_type"], name: "index_party_infos_on_party_type"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "productions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

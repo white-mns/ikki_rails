@@ -18,6 +18,11 @@
           %ul  
             %li= link_to "キャラクター名・PL名一覧", names_path
             %br
+            %li= link_to "現在地一覧", current_areas_path
+            %ul
+              %li= link_to "エリア進行度別 人数一覧", current_area_totals_path
+            %li= link_to "パーティ情報一覧", party_infos_path
+            %br
             %li= link_to "ステータス一覧", statuses_path
             %li= link_to "生産Lv一覧", productions_path
             %li= link_to "所持エンブリオ・スキル一覧", skills_path
@@ -26,9 +31,6 @@
             %li= link_to "所持アイテム一覧", items_path
             %ul
               %li= link_to "初期装備一覧", init_equips_path
-            %li= link_to "現在地一覧", current_areas_path
-            %ul
-              %li= link_to "エリア進行度別 人数一覧", current_area_totals_path
       .col-md-6
         %ul
           %li 戦闘データ

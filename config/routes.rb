@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :party_infos
   resources :parties
   get "current_area/totals",  :to => "current_areas#total",  :as => "current_area_totals"
   resources :current_areas
