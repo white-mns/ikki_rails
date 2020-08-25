@@ -154,11 +154,36 @@ module ApplicationHelper
         return text[area.level]
     end
 
-    def area_total_link(result_no, area, advance, data)
-        if !area then return end
-        if !data then return end
-        link_to data[[area.area_id, advance]], current_areas_path + "?result_no_form=" + sprintf("%d", result_no) + "&name_form=" + area.name + "&advance_form=" + sprintf("%d", advance)
+    def party_type_text(party)
+        if !party then 
+            return
+        end
+
+        if party.party_type == 0 then "今回戦闘"
+        elsif party.party_type == 1 then "次回予告"
+        else "？"
+        end
     end
 
+    def party_members_pc_name_text(party_members)
+        if !party_members then 
+            return
+        end
 
+        party_members.each do |party_member|
+            haml_concat pc_name_text(party_member.e_no, party_member.pc_name)
+            haml_tag :br
+        end
+    end
+
+    def enemy_members_text(members)
+        if !members then 
+            return
+        end
+
+        members.each do |member|
+            haml_concat member.enemy.name
+            haml_tag :br
+        end
+    end
 end
