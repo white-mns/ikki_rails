@@ -12,5 +12,6 @@ class ApplicationController < ActionController::Base
         @placeholder["Fuka"]   = "例）活力/\"回避撃\""
         @placeholder["Area"]   = "例）広庭/星屑の小川"
         @placeholder["Enemy"]  = "例）ラルフ/\"トキサメ\""
+        @placeholder["EnemyNames"]  = "例）トキサメ -闇色"
     end
 end

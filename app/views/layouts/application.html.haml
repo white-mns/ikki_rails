@@ -39,6 +39,12 @@
                 = link_to ">　初期装備一覧", init_equips_path, class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+                行動データ
+                %span.caret
+              .dropdown-menu
+                = link_to "次回予告NPC戦一覧", next_battle_infos_path, class: "dropdown-item"
+            %li.nav-item.dropdown
+              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 戦闘データ
                 %span.caret
               .dropdown-menu

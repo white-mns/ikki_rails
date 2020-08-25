@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_134514) do
+ActiveRecord::Schema.define(version: 2020_08_25_142453) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -164,6 +164,23 @@ ActiveRecord::Schema.define(version: 2020_08_25_134514) do
     t.datetime "updated_at", null: false
     t.index ["enemy_id"], name: "index_next_battle_enemies_on_enemy_id"
     t.index ["is_boss"], name: "index_next_battle_enemies_on_is_boss"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
+  end
+
+  create_table "next_battle_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "is_boss"
+    t.integer "enemy_party_name_id"
+    t.integer "member_num"
+    t.string "enemy_names"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_names"], name: "index_next_battle_infos_on_enemy_names"
+    t.index ["enemy_party_name_id"], name: "index_next_battle_infos_on_enemy_party_name_id"
+    t.index ["is_boss"], name: "index_next_battle_infos_on_is_boss"
+    t.index ["member_num"], name: "index_next_battle_infos_on_member_num"
     t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 

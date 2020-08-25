@@ -15,7 +15,7 @@
       .col-md-6
         %ul
           %li 個人データ
-          %ul  
+          %ul
             %li= link_to "キャラクター名・PL名一覧", names_path
             %br
             %li= link_to "現在地一覧", current_areas_path
@@ -31,6 +31,11 @@
             %li= link_to "所持アイテム一覧", items_path
             %ul
               %li= link_to "初期装備一覧", init_equips_path
+      .col-md-6
+        %ul
+          %li 行動データ
+          %ul
+            %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
       .col-md-6
         %ul
           %li 戦闘データ
