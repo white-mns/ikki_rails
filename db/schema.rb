@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_142453) do
+ActiveRecord::Schema.define(version: 2020_08_25_234457) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -182,6 +182,20 @@ ActiveRecord::Schema.define(version: 2020_08_25_142453) do
     t.index ["is_boss"], name: "index_next_battle_infos_on_is_boss"
     t.index ["member_num"], name: "index_next_battle_infos_on_member_num"
     t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
+  end
+
+  create_table "next_duel_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "left_party_no"
+    t.integer "right_party_no"
+    t.integer "battle_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_type"], name: "index_next_duel_infos_on_battle_type"
+    t.index ["left_party_no"], name: "index_next_duel_infos_on_left_party_no"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
+    t.index ["right_party_no"], name: "index_next_duel_infos_on_right_party_no"
   end
 
   create_table "parties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
