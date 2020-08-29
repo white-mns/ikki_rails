@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_26_020124) do
+ActiveRecord::Schema.define(version: 2020_08_29_011525) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -21,6 +21,21 @@ ActiveRecord::Schema.define(version: 2020_08_26_020124) do
     t.index ["area_id"], name: "index_area_data_on_area_id"
     t.index ["level"], name: "index_area_data_on_level"
     t.index ["name"], name: "index_area_data_on_name"
+  end
+
+  create_table "battle_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "before_result_no"
+    t.integer "before_generate_no"
+    t.integer "party_no"
+    t.integer "battle_result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_result"], name: "index_battle_results_on_battle_result"
+    t.index ["before_result_no", "party_no", "before_generate_no"], name: "beforeresultno_partyno"
+    t.index ["party_no"], name: "index_battle_results_on_party_no"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 
   create_table "current_areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
