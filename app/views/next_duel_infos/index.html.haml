@@ -39,6 +39,24 @@
                                  {label: "デュエル", params_name: "is_duel"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_current_area",
+                    label: {open: "現在地を表示する", close: "現在地を表示しない"},
+                    act_desc: "地形、エリア、進攻度、好戦度", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "地形", params_name: "level_form", colspan: 3,
+                    checkboxes: [{label: "平原", params_name: "level_1", class_name: "after_space"},
+                                 {label: "水辺", params_name: "level_2", class_name: "after_space"},
+                                 {label: "砂地", params_name: "level_3", class_name: "after_space mobile_br"},
+                                 {label: "城内", params_name: "level_4", class_name: "after_space"},
+                                 {label: "森林", params_name: "level_5", class_name: "after_space"},
+                                 {label: "山岳", params_name: "level_6"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エリア", params_name: "name_form", placeholder: "Area", colspan: 3)
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_member_num",
                     label: {open: "人数を表示する", close: "人数を表示しない"}, base_first: false)
     %tbody.closed
@@ -74,6 +92,9 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      - if @form_params["show_current_area"] == "1"
+        %th.sep= sort_link(@search, :current_area_area_level, "地形", default_order: :desc)
+        %th.r_sep= sort_link(@search, :current_area_area_id, "エリア", default_order: :desc)
       - if @form_params["show_member_num"] == "1"
         %th.sep= sort_link(@search, :left_party_info_member_num,"PT人数", default_order: :desc)
       - if @form_params["show_party_name"] == "1"
@@ -90,6 +111,9 @@
     - @next_duel_infos.each do |next_duel_info|
       %tr
         %td= next_duel_info.result_no
+        - if @form_params["show_current_area"] == "1"
+          %td.sep= area_level_text(next_duel_info.current_area.area) if next_duel_info.current_area && next_duel_info.current_area.area
+          %td.r_sep= next_duel_info.current_area.area.name if next_duel_info.current_area && next_duel_info.current_area.area
         - if @form_params["show_member_num"] == "1"
           %td.sep= next_duel_info.left_party_info.member_num if next_duel_info.left_party_info
         - if @form_params["show_party_name"] == "1"

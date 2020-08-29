@@ -7,8 +7,8 @@ class NextDuelInfosController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NextDuelInfo.notnil().includes([left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
-    @search	= NextDuelInfo.notnil().includes([left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
+    @count	= NextDuelInfo.notnil().includes([current_area: :area], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
+    @search	= NextDuelInfo.notnil().includes([current_area: :area], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @next_duel_infos	= @search.result.per(50)
   end
@@ -44,12 +44,24 @@ class NextDuelInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "right_party_info_name", params_name: "right_party_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "left_party_info_name_or_right_party_info_name", params_name: "party_name_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "current_area_advance", params_name: "advance_form", type: "number")
+    
+    checkbox_params_set_query_any(params, @form_params, query_name: "current_area_area_level_eq_any",
+                             checkboxes: [{params_name: "level_1", value: 1, first_checked: false},
+                                          {params_name: "level_2", value: 2, first_checked: false},
+                                          {params_name: "level_3", value: 3, first_checked: false},
+                                          {params_name: "level_4", value: 4, first_checked: false},
+                                          {params_name: "level_5", value: 5, first_checked: false},
+                                          {params_name: "level_6", value: 6, first_checked: false}])
+
+
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_type_eq_any",
                              checkboxes: [{params_name: "is_game", value: 0, first_checked: true},
                                           {params_name: "is_duel" ,  value: 1, first_checked: true}])
 
     toggle_params_to_variable(params, @form_params, params_name: "show_member_num")
     toggle_params_to_variable(params, @form_params, params_name: "show_party_name")
+    toggle_params_to_variable(params, @form_params, params_name: "show_current_area")
   end
   # GET /next_duel_infos/1
   #def show

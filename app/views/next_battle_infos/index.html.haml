@@ -44,6 +44,28 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名(※1)", params_name: "enemy_names_form", placeholder: "EnemyNames", colspan: 3)
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_current_area",
+                    label: {open: "現在地を表示する", close: "現在地を表示しない"},
+                    act_desc: "地形、エリア、進攻度、好戦度", base_first: true)
+    %tbody
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "地形", params_name: "level_form", colspan: 3,
+                    checkboxes: [{label: "平原", params_name: "level_1", class_name: "after_space"},
+                                 {label: "水辺", params_name: "level_2", class_name: "after_space"},
+                                 {label: "砂地", params_name: "level_3", class_name: "after_space mobile_br"},
+                                 {label: "城内", params_name: "level_4", class_name: "after_space"},
+                                 {label: "森林", params_name: "level_5", class_name: "after_space"},
+                                 {label: "山岳", params_name: "level_6"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エリア", params_name: "name_form", placeholder: "Area", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "進攻度", params_name: "advance_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "好戦度", params_name: "bellicosity_form", placeholder: "Number")
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_member_num",
                     label: {open: "人数を表示する", close: "人数を表示しない"}, base_first: false)
     %tbody.closed
@@ -84,7 +106,12 @@
         %th= sort_link(@search, :party_info_name, "PT名", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       - if @form_params["show_member_num"] == "1"
-        %th= sort_link(@search, :party_info_member_num,"PT人数", default_order: :desc)
+        %th.r_sep= sort_link(@search, :party_info_member_num,"PT人数", default_order: :desc)
+      - if @form_params["show_current_area"] == "1"
+        %th.sep= sort_link(@search, :current_area_area_level, "地形", default_order: :desc)
+        %th= sort_link(@search, :current_area_area_id, "エリア", default_order: :desc)
+        %th= sort_link(@search, :current_area_advance, "進攻度", default_order: :desc)
+        %th.r_sep= sort_link(@search, :current_area_bellicosity, "好戦度", default_order: :desc)
       - if @form_params["show_party_name"] == "1"
         %th= sort_link(@search, :enemy_party_name_id, "敵PT名", default_order: :desc)
       %th= sort_link(@search, :enemy_members_enemy_name, "敵一覧", default_order: :desc)
@@ -101,7 +128,12 @@
         %td.text-nowrap
           - party_members_pc_name_text(next_battle_info.party_info.party_members)
         - if @form_params["show_member_num"] == "1"
-          %td= next_battle_info.party_info.member_num if next_battle_info.party_info
+          %td.r_sep= next_battle_info.party_info.member_num if next_battle_info.party_info
+        - if @form_params["show_current_area"] == "1"
+          %td.sep= area_level_text(next_battle_info.current_area.area) if next_battle_info.current_area && next_battle_info.current_area.area
+          %td= next_battle_info.current_area.area.name if next_battle_info.current_area && next_battle_info.current_area.area
+          %td= next_battle_info.current_area.advance if next_battle_info.current_area 
+          %td.r_sep= next_battle_info.current_area.bellicosity if next_battle_info.current_area 
         - if @form_params["show_party_name"] == "1"
           %td= next_battle_info.enemy_party_name.name if next_battle_info.enemy_party_name
         %td.text-nowrap

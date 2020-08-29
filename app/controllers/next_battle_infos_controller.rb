@@ -7,8 +7,8 @@ class NextBattleInfosController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NextBattleInfo.notnil().includes(:current_area, [party_info: [party_members: :pc_name]], [enemy_members: :enemy]).search(params[:q]).result.hit_count()
-    @search	= NextBattleInfo.notnil().includes(:current_area, [party_info: [party_members: :pc_name]], [enemy_members: :enemy]).page(params[:page]).search(params[:q])
+    @count	= NextBattleInfo.notnil().includes([current_area: :area], [party_info: [party_members: :pc_name]], [enemy_members: :enemy]).search(params[:q]).result.hit_count()
+    @search	= NextBattleInfo.notnil().includes([current_area: :area], [party_info: [party_members: :pc_name]], [enemy_members: :enemy]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @next_battle_infos	= @search.result.per(50)
   end
@@ -40,12 +40,26 @@ class NextBattleInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "enemy_party_name_name", params_name: "enemy_party_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "party_info_name", params_name: "party_name_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "current_area_advance", params_name: "advance_form", type: "number")
+    params_to_form(params, @form_params, column_name: "current_area_bellicosity", params_name: "bellicosity_form", type: "number")
+    params_to_form(params, @form_params, column_name: "current_area_area_name", params_name: "name_form", type: "text")
+    
+    checkbox_params_set_query_any(params, @form_params, query_name: "current_area_area_level_eq_any",
+                             checkboxes: [{params_name: "level_1", value: 1, first_checked: false},
+                                          {params_name: "level_2", value: 2, first_checked: false},
+                                          {params_name: "level_3", value: 3, first_checked: false},
+                                          {params_name: "level_4", value: 4, first_checked: false},
+                                          {params_name: "level_5", value: 5, first_checked: false},
+                                          {params_name: "level_6", value: 6, first_checked: false}])
+
     checkbox_params_set_query_any(params, @form_params, query_name: "is_boss_eq_any",
                              checkboxes: [{params_name: "is_encounter", value: 0, first_checked: false},
                                           {params_name: "is_boss" ,     value: 1, first_checked: false}])
 
     toggle_params_to_variable(params, @form_params, params_name: "show_member_num")
     toggle_params_to_variable(params, @form_params, params_name: "show_party_name")
+    toggle_params_to_variable(params, @form_params, params_name: "show_current_area", first_opened: true)
+    @form_params["base_first"]    = (!params["is_form"]) ? "1" : "0"
   end
   # GET /next_battle_infos/1
   #def show

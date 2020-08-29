@@ -186,6 +186,10 @@ th.sep,td.sep{
     border-left: 3px solid $table-border-color;
 }
 
+th.r_sep,td.r_sep{
+    border-right: 3px solid $table-border-color;
+}
+
 tr.sep{
     border-top: 4px solid $table-border-color;
 }
