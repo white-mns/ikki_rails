@@ -34,7 +34,8 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_embryo",
-                    label: {open: "エンブリオを表示する", close: "エンブリオを表示しない"}, base_first: true)
+                    label: {open: "エンブリオを表示する", close: "エンブリオを表示しない"},
+                    act_desc: "エンブリオ名、物理or魔法", base_first: true)
     %tbody.closed
       %tr
         %td.indent
@@ -45,7 +46,8 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_skill",
-                    label: {open: "スキル情報を表示する", close: "スキル情報を表示しない"}, base_first: true)
+                    label: {open: "スキル情報を表示する", close: "スキル情報を表示しない"},
+                    act_desc: "習得Lv、SP、ギフト、GP", base_first: true)
     %tbody.closed
       %tr
         %td.indent
