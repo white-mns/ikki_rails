@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_011525) do
+ActiveRecord::Schema.define(version: 2020_09_10_052530) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -52,6 +52,25 @@ ActiveRecord::Schema.define(version: 2020_08_29_011525) do
     t.index ["bellicosity"], name: "index_current_areas_on_bellicosity"
     t.index ["result_no", "area_id", "advance"], name: "resultno_areaid_advance"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "duel_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "before_result_no"
+    t.integer "before_generate_no"
+    t.integer "left_party_no"
+    t.integer "right_party_no"
+    t.integer "battle_result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_result"], name: "index_duel_results_on_battle_result"
+    t.index ["before_result_no", "left_party_no", "before_generate_no"], name: "beforeresultno_leftpartyno"
+    t.index ["before_result_no", "right_party_no", "before_generate_no"], name: "beforeresultno_rightpartyno"
+    t.index ["left_party_no"], name: "index_duel_results_on_left_party_no"
+    t.index ["result_no", "left_party_no", "generate_no"], name: "resultno_leftpartyno"
+    t.index ["result_no", "right_party_no", "generate_no"], name: "resultno_rightpartyno"
+    t.index ["right_party_no"], name: "index_duel_results_on_right_party_no"
   end
 
   create_table "embryo_names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
