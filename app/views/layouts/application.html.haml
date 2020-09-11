@@ -62,8 +62,9 @@
                 = link_to "新出エンブリオ一覧", new_embryos_path, class: "dropdown-item"
                 = link_to "新出スキル一覧", new_skills_path, class: "dropdown-item"
                 = link_to "新出予告NPC一覧", new_next_enemies_path, class: "dropdown-item"
-                = link_to "初戦闘NPC一覧", new_battle_enemies_path
-                = link_to ">　初戦闘ボス一覧", new_battle_enemies_path + "?base_first=1&show_skill=0&is_boss=on"
+                = link_to "初戦闘NPC一覧", new_battle_enemies_path, class: "dropdown-item"
+                = link_to ">　初戦闘ボス一覧", new_battle_enemies_path + "?base_first=1&show_skill=0&is_boss=on", class: "dropdown-item"
+                = link_to "ボス初突破一覧", new_defeat_enemies_path, class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 その他データ
