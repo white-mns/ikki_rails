@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_001335) do
+ActiveRecord::Schema.define(version: 2020_09_11_013610) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -155,6 +155,10 @@ ActiveRecord::Schema.define(version: 2020_09_11_001335) do
     t.integer "is_boss"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "area_id"
+    t.integer "advance"
+    t.index ["advance"], name: "index_new_battle_enemies_on_advance"
+    t.index ["area_id"], name: "index_new_battle_enemies_on_area_id"
     t.index ["enemy_id"], name: "index_new_battle_enemies_on_enemy_id"
     t.index ["is_boss"], name: "index_new_battle_enemies_on_is_boss"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
@@ -197,6 +201,10 @@ ActiveRecord::Schema.define(version: 2020_09_11_001335) do
     t.integer "is_boss"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "area_id"
+    t.integer "advance"
+    t.index ["advance"], name: "index_new_next_enemies_on_advance"
+    t.index ["area_id"], name: "index_new_next_enemies_on_area_id"
     t.index ["enemy_id"], name: "index_new_next_enemies_on_enemy_id"
     t.index ["is_boss"], name: "index_new_next_enemies_on_is_boss"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"

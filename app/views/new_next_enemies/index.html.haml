@@ -30,12 +30,25 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
                     checkboxes: [{label: "通常", params_name: "is_encounter", class_name: "after_space"},
                                  {label: "ボス", params_name: "is_boss"}])
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "地形", params_name: "level_form", colspan: 3,
+                    checkboxes: [{label: "平原", params_name: "level_1", class_name: "after_space"},
+                                 {label: "水辺", params_name: "level_2", class_name: "after_space"},
+                                 {label: "砂地", params_name: "level_3", class_name: "after_space mobile_br"},
+                                 {label: "城内", params_name: "level_4", class_name: "after_space"},
+                                 {label: "森林", params_name: "level_5", class_name: "after_space"},
+                                 {label: "山岳", params_name: "level_6"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エリア", params_name: "name_form", placeholder: "Area")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "進攻度", params_name: "advance_form", placeholder: "Number") 
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
@@ -53,12 +66,18 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :enemy_id, "敵名", default_order: :desc)
+      %th.sep= sort_link(@search, :area_level, "地形", default_order: :desc)
+      %th= sort_link(@search, :area_id, "エリア", default_order: :desc)
+      %th= sort_link(@search, :advance, "進攻度", default_order: :desc)
+      %th.sep= sort_link(@search, :enemy_id, "敵名", default_order: :desc)
       %th= sort_link(@search, :is_boss, "ボス", default_order: :desc)
   %tbody
     - @new_next_enemies.each do |new_next_enemy|
       %tr
         %td= new_next_enemy.result_no
-        %td= detail_new_next_enemy_link(new_next_enemy)
+        %td.sep= area_level_text(new_next_enemy.area) if new_next_enemy.area
+        %td= new_next_enemy.area.name if new_next_enemy.area
+        %td= new_next_enemy.advance
+        %td.sep= detail_new_next_enemy_link(new_next_enemy)
         %td= is_boss_text(new_next_enemy)
 = paginate(@new_next_enemies)

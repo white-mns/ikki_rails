@@ -7,8 +7,8 @@ class NewBattleEnemiesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NewBattleEnemy.notnil().includes(:enemy).search(params[:q]).result.hit_count()
-    @search	= NewBattleEnemy.notnil().includes(:enemy).page(params[:page]).search(params[:q])
+    @count	= NewBattleEnemy.notnil().includes(:enemy, :area).search(params[:q]).result.hit_count()
+    @search	= NewBattleEnemy.notnil().includes(:enemy, :area).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_battle_enemies	= @search.result.per(50)
   end
@@ -28,12 +28,24 @@ class NewBattleEnemiesController < ApplicationController
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "enemy_id", params_name: "enemy_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "is_boss", params_name: "is_boss_form", type: "number")
+    params_to_form(params, @form_params, column_name: "advance", params_name: "advance_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "enemy_name", params_name: "enemy_form", type: "number")
+
+    params_to_form(params, @form_params, column_name: "area_name", params_name: "name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "area_level", params_name: "level_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "is_boss_eq_any",
                              checkboxes: [{params_name: "is_encounter", value: 0, first_checked: false},
                                           {params_name: "is_boss" ,     value: 1, first_checked: false}])
+    
+    checkbox_params_set_query_any(params, @form_params, query_name: "area_level_eq_any",
+                             checkboxes: [{params_name: "level_1", value: 1, first_checked: false},
+                                          {params_name: "level_2", value: 2, first_checked: false},
+                                          {params_name: "level_3", value: 3, first_checked: false},
+                                          {params_name: "level_4", value: 4, first_checked: false},
+                                          {params_name: "level_5", value: 5, first_checked: false},
+                                          {params_name: "level_6", value: 6, first_checked: false}])
   end
   # GET /new_battle_enemies/1
   #def show
@@ -82,6 +94,6 @@ class NewBattleEnemiesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def new_battle_enemy_params
-      params.require(:new_battle_enemy).permit(:result_no, :generate_no, :enemy_id, :is_boss)
+      params.require(:new_battle_enemy).permit(:result_no, :generate_no, :enemy_id, :is_boss, :area_id, :advance)
     end
 end
