@@ -27,7 +27,7 @@
             %li= link_to "生産Lv一覧", productions_path
             %li= link_to "所持エンブリオ・スキル一覧", skills_path
             %ul
-              %li= link_to "エンブリオのみ表示", skills_path + "?&base_first=1&show_skill=0&is_form=1"
+              %li= link_to "エンブリオのみ表示", skills_path + "?base_first=1&show_skill=0&is_form=1"
             %li= link_to "所持アイテム一覧", items_path
             %ul
               %li= link_to "初期装備一覧", init_equips_path
@@ -52,6 +52,11 @@
             %li= link_to "新出エンブリオ一覧", new_embryos_path
             %li= link_to "新出スキル一覧", new_skills_path
             %li= link_to "新出予告NPC一覧", new_next_enemies_path
+            %ul
+              %li= link_to "新出予告ボス一覧", new_next_enemies_path + "?base_first=1&is_boss=on"
+            %li= link_to "初戦闘NPC一覧", new_battle_enemies_path
+            %ul
+              %li= link_to "初戦闘ボス一覧", new_battle_enemies_path + "?base_first=1&is_boss=on"
       .col-md-6
         %ul
           %li その他データ

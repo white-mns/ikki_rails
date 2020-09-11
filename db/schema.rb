@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_052530) do
+ActiveRecord::Schema.define(version: 2020_09_11_001335) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -146,6 +146,18 @@ ActiveRecord::Schema.define(version: 2020_09_10_052530) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "new_battle_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "enemy_id"
+    t.integer "is_boss"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_new_battle_enemies_on_enemy_id"
+    t.index ["is_boss"], name: "index_new_battle_enemies_on_is_boss"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
   end
 
   create_table "new_embryos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
