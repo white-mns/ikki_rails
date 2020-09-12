@@ -43,6 +43,7 @@ class StatusesController < ApplicationController
     params_to_form(params, @form_params, column_name: "agi", params_name: "agi_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "guardian_name", params_name: "guardian_form", type: "text")
+    params_to_form(params, @form_params, column_name: "prize_prize", params_name: "prize_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "guardian_name_cont_any",
                              checkboxes: [{params_name: "guardian_hot", value: "熱血", first_checked: false},

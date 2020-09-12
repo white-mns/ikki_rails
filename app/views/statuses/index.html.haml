@@ -71,6 +71,9 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PS", params_name: "ps_form", placeholder: "Number")
       %tr.sep
         %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "賞金", params_name: "prize_form", placeholder: "Number", colspan: 3)
+      %tr.sep
+        %td.indent
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
           - search_submit_button
@@ -101,6 +104,7 @@
       %th= sort_link(@search, :agi, "AGI", default_order: :desc)
       %th.sep= sort_link(@search, :cp, "CP", default_order: :desc)
       %th= sort_link(@search, :ps, "PS", default_order: :desc)
+      %th.sep= sort_link(@search, :prize_prize, "賞金", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @statuses.each do |status|
@@ -121,6 +125,7 @@
         %td= status.agi
         %td.sep= status.cp
         %td= status.ps
+        %td.sep= status.prize.prize if status.prize
         %td.sep= character_link(status.e_no)
         %td= character_old_link(@latest_result, status.e_no, status.result_no, status.generate_no)
 = paginate(@statuses)
