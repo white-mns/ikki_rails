@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :assaults
   resources :pk_data
   resources :new_defeat_enemies
   resources :new_battle_enemies

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_12_092654) do
+ActiveRecord::Schema.define(version: 2020_09_12_170243) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -21,6 +21,17 @@ ActiveRecord::Schema.define(version: 2020_09_12_092654) do
     t.index ["area_id"], name: "index_area_data_on_area_id"
     t.index ["level"], name: "index_area_data_on_level"
     t.index ["name"], name: "index_area_data_on_name"
+  end
+
+  create_table "assaults", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "assault_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assault_type"], name: "index_assaults_on_assault_type"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "battle_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
