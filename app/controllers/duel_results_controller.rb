@@ -7,8 +7,8 @@ class DuelResultsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= DuelResult.notnil().includes([battle_info: [:current_area, :enemy_party_name]], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
-    @search	= DuelResult.notnil().includes([battle_info: [:current_area, :enemy_party_name]], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
+    @count	= DuelResult.notnil().distinct.includes([battle_info: [:current_area, :enemy_party_name]], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
+    @search	= DuelResult.notnil().distinct.includes([battle_info: [:current_area, :enemy_party_name]], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @duel_results	= @search.result.per(50)
   end

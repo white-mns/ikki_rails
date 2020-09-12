@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_062132) do
+ActiveRecord::Schema.define(version: 2020_09_12_092654) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -308,6 +308,27 @@ ActiveRecord::Schema.define(version: 2020_09_11_062132) do
     t.index ["name"], name: "index_party_infos_on_name"
     t.index ["party_type"], name: "index_party_infos_on_party_type"
     t.index ["result_no", "party_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "pk_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "pk_num"
+    t.integer "pk_win_num"
+    t.integer "latest_pk_result_no"
+    t.integer "pkk_num"
+    t.integer "pkk_win_num"
+    t.integer "latest_pkk_result_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["latest_pk_result_no"], name: "index_pk_data_on_latest_pk_result_no"
+    t.index ["latest_pkk_result_no"], name: "index_pk_data_on_latest_pkk_result_no"
+    t.index ["pk_num"], name: "index_pk_data_on_pk_num"
+    t.index ["pk_win_num"], name: "index_pk_data_on_pk_win_num"
+    t.index ["pkk_num"], name: "index_pk_data_on_pkk_num"
+    t.index ["pkk_win_num"], name: "index_pk_data_on_pkk_win_num"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "productions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

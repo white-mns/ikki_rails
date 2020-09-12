@@ -1,0 +1,148 @@
+- @page_title = "PK一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PK回数", params_name: "pk_num_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PK勝利数", params_name: "pk_win_num_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "最終PK予告", params_name: "latest_pk_result_no_form", placeholder: "Number", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PS", params_name: "ps_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "賞金", params_name: "pk_win_num_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "CLV", params_name: "clv_form", placeholder: "Number", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "パーティ人数", params_name: "member_num_form", colspan: 3,
+                    checkboxes: [{label: "1", params_name: "member_num_1", class_name: "after_space"},
+                                 {label: "2", params_name: "member_num_2", class_name: "after_space"},
+                                 {label: "3", params_name: "member_num_3", class_name: "after_space"},
+                                 {label: "4", params_name: "member_num_4", class_name: "after_space"}])
+      %tr
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_pkk",
+                    label: {open: "PKK情報を表示する", close: "PKK情報を表示しない"},
+                    act_desc: "PKK回数、PKK勝利数、最終PKK予告、PKKの表示", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PKK回数", params_name: "pkk_num_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PKK勝利数", params_name: "pkk_win_num_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "最終PKK予告", params_name: "latest_pkk_result_no_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_current_area",
+                    label: {open: "現在地で絞り込む", close: "現在地で絞り込みを隠す"},
+                    act_desc: "地形、エリア、進攻度、好戦度", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "地形", params_name: "level_form", colspan: 3,
+                    checkboxes: [{label: "平原", params_name: "level_1", class_name: "after_space"},
+                                 {label: "水辺", params_name: "level_2", class_name: "after_space"},
+                                 {label: "砂地", params_name: "level_3", class_name: "after_space mobile_br"},
+                                 {label: "城内", params_name: "level_4", class_name: "after_space"},
+                                 {label: "森林", params_name: "level_5", class_name: "after_space"},
+                                 {label: "山岳", params_name: "level_6"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エリア", params_name: "area_form", placeholder: "Area", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "進攻度", params_name: "advance_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@pk_data)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :current_area_area_level, "地形", default_order: :desc)
+      %th= sort_link(@search, :current_area_area_id, "エリア", default_order: :desc)
+      %th= sort_link(@search, :current_area_advance, "進攻度", default_order: :desc)
+      %th.sep= sort_link(@search, :pk_num, "PK回数", default_order: :desc)
+      %th= sort_link(@search, :pk_win_num, "PK勝利数", default_order: :desc)
+      %th= sort_link(@search, :latest_pk_result_no, "最終PK予告", default_order: :desc)
+      - if @form_params["show_pkk"] == "1"
+        %th.sep= sort_link(@search, :pkk_num, "PKK回数", default_order: :desc)
+        %th= sort_link(@search, :pkk_win_num, "PKK勝利数", default_order: :desc)
+        %th= sort_link(@search, :latest_pkk_result_no, "最終PKK予告", default_order: :desc)
+      %th.sep= sort_link(@search, :status_ps, "PS", default_order: :desc)
+      %th= sort_link(@search, :status_ps, "賞金", default_order: :desc)
+      %th= sort_link(@search, :status_clv, "CLV", default_order: :desc)
+      %th= sort_link(@search, :party_party_info_member_num, "PT人数", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @pk_data.each do |pk_datum|
+      %tr
+        %td= pk_datum.result_no
+        %td= pc_name_text(pk_datum.e_no, pk_datum.pc_name)
+        %td.sep= area_level_text(pk_datum.party.party_info.current_area.area) if pk_datum.party.party_info.current_area && pk_datum.party.party_info.current_area.area
+        %td= pk_datum.party.party_info.current_area.area.name if pk_datum.party.party_info.current_area && pk_datum.party.party_info.current_area.area
+        %td= pk_datum.party.party_info.current_area.advance
+        %td.sep= pk_datum.pk_num
+        %td= pk_datum.pk_win_num
+        %td= pk_datum.latest_pk_result_no
+        - if @form_params["show_pkk"] == "1"
+          %td.sep= pk_datum.pkk_num
+          %td= pk_datum.pkk_win_num
+          %td= pk_datum.latest_pkk_result_no
+        %td.sep= pk_datum.status.ps if pk_datum.status
+        %td
+        %td= pk_datum.status.clv if pk_datum.status
+        %td= pk_datum.party.party_info.member_num if pk_datum.party && pk_datum.party.party_info
+        %td.sep= character_link(pk_datum.e_no)
+        %td= character_old_link(@latest_result, pk_datum.e_no, pk_datum.result_no, pk_datum.generate_no)
+= paginate(@pk_data)

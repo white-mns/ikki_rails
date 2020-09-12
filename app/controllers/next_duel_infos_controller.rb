@@ -7,8 +7,8 @@ class NextDuelInfosController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NextDuelInfo.notnil().includes([current_area: :area], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
-    @search	= NextDuelInfo.notnil().includes([current_area: :area], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
+    @count	= NextDuelInfo.notnil().distinct.includes([current_area: :area], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
+    @search	= NextDuelInfo.notnil().distinct.includes([current_area: :area], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @next_duel_infos	= @search.result.per(50)
   end
@@ -65,7 +65,6 @@ class NextDuelInfosController < ApplicationController
                                           {params_name: "level_4", value: 4, first_checked: false},
                                           {params_name: "level_5", value: 5, first_checked: false},
                                           {params_name: "level_6", value: 6, first_checked: false}])
-
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_type_eq_any",
                              checkboxes: [{params_name: "is_game", value: 0, first_checked: true},

@@ -33,16 +33,17 @@
               %li= link_to "初期装備一覧", init_equips_path
       .col-md-6
         %ul
-          %li 行動データ
-          %ul
-      .col-md-6
-        %ul
           %li 戦闘データ
           %ul
             %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
             %li= link_to "次回予告対人戦一覧", next_duel_infos_path
             %li= link_to "NPC戦勝敗一覧", battle_results_path
             %li= link_to "対人戦戦勝敗一覧", duel_results_path
+      .col-md-6
+        %ul
+          %li PKデータ
+          %ul
+            %li= link_to "PK一覧", pk_data_path
       .col-md-6
         %ul
           %li 新出データ
