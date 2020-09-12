@@ -43,6 +43,12 @@ class NextBattleInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "current_area_advance", params_name: "advance_form", type: "number")
     params_to_form(params, @form_params, column_name: "current_area_bellicosity", params_name: "bellicosity_form", type: "number")
     params_to_form(params, @form_params, column_name: "current_area_area_name", params_name: "name_form", type: "text")
+ 
+    checkbox_params_set_query_any(params, @form_params, query_name: "party_info_member_num_eq_any",
+                             checkboxes: [{params_name: "member_num_1", value: 1, first_checked: false},
+                                          {params_name: "member_num_2", value: 2, first_checked: false},
+                                          {params_name: "member_num_3", value: 3, first_checked: false},
+                                          {params_name: "member_num_4", value: 4, first_checked: false}])
     
     checkbox_params_set_query_any(params, @form_params, query_name: "current_area_area_level_eq_any",
                              checkboxes: [{params_name: "level_1", value: 1, first_checked: false},
