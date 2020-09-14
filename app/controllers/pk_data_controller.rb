@@ -7,8 +7,8 @@ class PkDataController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= PkDatum.notnil().distinct.includes(:pc_name, :status, [party: [party_info: [current_area: :area]]]).search(params[:q]).result.hit_count()
-    @search	= PkDatum.notnil().distinct.includes(:pc_name, :status, [party: [party_info: [current_area: :area]]]).page(params[:page]).search(params[:q])
+    @count	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [party: [party_info: [current_area: :area]]]).search(params[:q]).result.hit_count()
+    @search	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [party: [party_info: [current_area: :area]]]).page(params[:page]).search(params[:q])
     @search.sorts = "e_no asc" if @search.sorts.empty?
     @pk_data	= @search.result.per(50)
   end
@@ -40,6 +40,8 @@ class PkDataController < ApplicationController
     params_to_form(params, @form_params, column_name: "party_party_info_current_area_area_name", params_name: "area_form", type: "text")
     params_to_form(params, @form_params, column_name: "party_party_info_current_area_advance", params_name: "advance_form", type: "number")
     params_to_form(params, @form_params, column_name: "party_party_info_current_area_bellicosity", params_name: "bellicosity_form", type: "number")
+
+    params_to_form(params, @form_params, column_name: "prize_prize", params_name: "prize_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "party_party_info_member_num_eq_any",
                              checkboxes: [{params_name: "member_num_1", value: 1, first_checked: false},
