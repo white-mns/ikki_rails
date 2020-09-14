@@ -55,7 +55,7 @@
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      %th= sort_link(@search, :prize, "Prize", default_order: :desc)
+      %th= sort_link(@search, :prize, "賞金", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @prizes.each do |prize|

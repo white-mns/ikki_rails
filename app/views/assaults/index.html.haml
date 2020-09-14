@@ -38,11 +38,11 @@
         %td.indent
         - td_form(f, @form_params, @placeholder,  label: "襲撃タイプ", params_name: "assault_type_form", colspan: 3,
                     checkboxes: [{label: "PK", params_name: "assault_1", class_name: "after_space"},
-                                 {label: "PKvsPK(襲撃)", params_name: "assault_2", class_name: "after_space"},
-                                 {label: "PKK非襲撃", params_name: "assault_3", class_name: "after_space mobile_br"},
-                                 {label: "PKvsPK(被襲撃)", params_name: "assault_4", class_name: "after_space"},
+                                 {label: "PKvsPK(襲撃)", params_name: "assault_2", class_name: "after_space mobile_br"},
+                                 {label: "被PKK", params_name: "assault_3", class_name: "after_space"},
+                                 {label: "PKvsPK(被襲撃)", params_name: "assault_4", class_name: "after_space", br: true},
                                  {label: "PKK", params_name: "assault_5", class_name: "after_space"},
-                                 {label: "被害者", params_name: "assault_6"}])
+                                 {label: "被PK", params_name: "assault_6"}])
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
