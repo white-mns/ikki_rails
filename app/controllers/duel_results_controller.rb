@@ -7,8 +7,8 @@ class DuelResultsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= DuelResult.notnil().distinct.includes([battle_info: [:current_area, :enemy_party_name]], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
-    @search	= DuelResult.notnil().distinct.includes([battle_info: [:current_area, :enemy_party_name]], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
+    @count	= DuelResult.notnil().distinct.includes(:left_party_assault, :right_party_assault, [battle_info: [current_area: :area]], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
+    @search	= DuelResult.notnil().distinct.includes(:left_party_assault, :right_party_assault, [battle_info: [current_area: :area]], [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @duel_results	= @search.result.per(50)
   end
@@ -38,7 +38,17 @@ class DuelResultsController < ApplicationController
     params_to_form(params, @form_params, column_name: "left_party_info_party_members_e_no_or_right_party_info_party_members_e_no", params_name: "e_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "left_party_info_party_members_pc_name_name_or_right_party_info_party_members_pc_name_name", params_name: "pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "left_party_info_name_or_right_party_info_name", params_name: "party_name_form", type: "text")
- 
+
+    params_to_form(params, @form_params, column_name: "battle_info_current_area_advance", params_name: "advance_form", type: "number")
+  
+    checkbox_params_set_query_any(params, @form_params, query_name: "left_party_assault_assault_type_or_right_party_assault_assault_type_eq_any",
+                             checkboxes: [{params_name: "assault_1", value: 1, first_checked: false},
+                                          {params_name: "assault_2", value: 2, first_checked: false},
+                                          {params_name: "assault_3", value: 3, first_checked: false},
+                                          {params_name: "assault_4", value: 4, first_checked: false},
+                                          {params_name: "assault_5", value: 5, first_checked: false},
+                                          {params_name: "assault_6", value: 6, first_checked: false}])
+
     checkbox_params_set_query_any(params, @form_params, query_name: "left_party_info_member_num_eq_any",
                              checkboxes: [{params_name: "left_member_num_1", value: 1, first_checked: false},
                                           {params_name: "left_member_num_2", value: 2, first_checked: false},
@@ -50,18 +60,28 @@ class DuelResultsController < ApplicationController
                                           {params_name: "right_member_num_2", value: 2, first_checked: false},
                                           {params_name: "right_member_num_3", value: 3, first_checked: false},
                                           {params_name: "right_member_num_4", value: 4, first_checked: false}])
- 
+     
+    checkbox_params_set_query_any(params, @form_params, query_name: "battle_info_current_area_area_level_eq_any",
+                             checkboxes: [{params_name: "level_1", value: 1, first_checked: false},
+                                          {params_name: "level_2", value: 2, first_checked: false},
+                                          {params_name: "level_3", value: 3, first_checked: false},
+                                          {params_name: "level_4", value: 4, first_checked: false},
+                                          {params_name: "level_5", value: 5, first_checked: false},
+                                          {params_name: "level_6", value: 6, first_checked: false}])
+
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_info_battle_type_eq_any",
-                             checkboxes: [{params_name: "is_duel", value: 10, first_checked: true},
-                                          {params_name: "is_game" ,  value: 11, first_checked: true}])
+                             checkboxes: [{params_name: "is_game", value: 0, first_checked: true},
+                                          {params_name: "is_duel" ,  value: 1, first_checked: true}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_result_eq_any",
                              checkboxes: [{params_name: "result_win",   value: 1, first_checked: true},
                                           {params_name: "result_draw",  value: 0, first_checked: true},
                                           {params_name: "result_lose" , value: -1, first_checked: true}])
 
+    toggle_params_to_variable(params, @form_params, params_name: "show_assault")
     toggle_params_to_variable(params, @form_params, params_name: "show_member_num")
     toggle_params_to_variable(params, @form_params, params_name: "show_party_name")
+    toggle_params_to_variable(params, @form_params, params_name: "show_current_area")
   end
   # GET /duel_results/1
   #def show

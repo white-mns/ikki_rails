@@ -45,6 +45,39 @@
                                  {label: "右PTが勝利", params_name: "result_lose"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_assault",
+                    label: {open: "襲撃タイプを表示する", close: "襲撃タイプを表示しない"},
+                    act_desc: "PK、PKvsPK、PKK……", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "襲撃タイプ", params_name: "assault_type_form", colspan: 3,
+                    checkboxes: [{label: "PK", params_name: "assault_1", class_name: "after_space"},
+                                 {label: "PKvsPK(襲撃)", params_name: "assault_2", class_name: "after_space mobile_br"},
+                                 {label: "被PKK", params_name: "assault_3", class_name: "after_space"},
+                                 {label: "PKvsPK(被襲撃)", params_name: "assault_4", class_name: "after_space", br: true},
+                                 {label: "PKK", params_name: "assault_5", class_name: "after_space"},
+                                 {label: "被PK", params_name: "assault_6"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_current_area",
+                    label: {open: "現在地を表示する", close: "現在地を表示しない"},
+                    act_desc: "地形、エリア", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "地形", params_name: "level_form", colspan: 3,
+                    checkboxes: [{label: "平原", params_name: "level_1", class_name: "after_space"},
+                                 {label: "水辺", params_name: "level_2", class_name: "after_space"},
+                                 {label: "砂地", params_name: "level_3", class_name: "after_space mobile_br"},
+                                 {label: "城内", params_name: "level_4", class_name: "after_space"},
+                                 {label: "森林", params_name: "level_5", class_name: "after_space"},
+                                 {label: "山岳", params_name: "level_6"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エリア", params_name: "name_form", placeholder: "Area", colspan: 3)
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_member_num",
                     label: {open: "人数を表示する", close: "人数を表示しない"},
                     act_desc: "左PT人数、右PT人数", base_first: false)
@@ -89,7 +122,13 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :battle_result_battle_result,"勝敗", default_order: :desc)
+      %th= sort_link(@search, :battle_type,"戦闘", default_order: :desc)
+      - if @form_params["show_current_area"] == "1"
+        %th.sep= sort_link(@search, :current_area_area_level, "地形", default_order: :desc)
+        %th.r_sep= sort_link(@search, :current_area_area_id, "エリア", default_order: :desc)
+      - if @form_params["show_assault"] == "1"
+        %th.sep.r_sep= sort_link(@search, :left_party_assault,"襲撃", default_order: :desc)
+      %th.sep= sort_link(@search, :battle_result_battle_result,"勝敗", default_order: :desc)
       - if @form_params["show_member_num"] == "1"
         %th.sep= sort_link(@search, :left_party_info_member_num,"PT人数", default_order: :desc)
       - if @form_params["show_party_name"] == "1"
@@ -102,23 +141,31 @@
       - if @form_params["show_member_num"] == "1"
         %th.sep= sort_link(@search, :right_party_info_member_num,"PT人数", default_order: :desc)
       %th= sort_link(@search, :battle_result_battle_result,"勝敗", default_order: :desc)
+      - if @form_params["show_assault"] == "1"
+        %th.sep= sort_link(@search, :right_party_assault,"襲撃", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @duel_results.each do |duel_result|
       %tr
         %td= duel_result.result_no
-        %td.sep
+        %td= duel_type_text(duel_result.battle_info)
+        - if @form_params["show_current_area"] == "1"
+          %td.sep= area_level_text(duel_result.battle_info.current_area.area) if duel_result.battle_info.current_area && duel_result.battle_info.current_area.area
+          %td.r_sep= duel_result.battle_info.current_area.area.name if duel_result.battle_info.current_area && duel_result.battle_info.current_area.area
+        - if @form_params["show_assault"] == "1"
+          %td.sep.r_sep= assault_text(duel_result.battle_info.left_party_assault.assault_type) if duel_result.battle_info.left_party_assault
+        %td.sep.text-nowrap
           = "勝利" if duel_result.battle_result == 1
           = "　引分" if duel_result.battle_result == 0
         - if @form_params["show_member_num"] == "1"
           %td.sep= duel_result.left_party_info.member_num if duel_result.left_party_info
         - if @form_params["show_party_name"] == "1"
           %td= duel_result.left_party_info.name if duel_result.left_party_info
-        %td
+        %td.text-nowrap
           - party_members_pc_name_text(duel_result.left_party_info.party_members) if duel_result.left_party_info
         %td
           VS
-        %td
+        %td.text-nowrap
           - party_members_pc_name_text(duel_result.right_party_info.party_members) if duel_result.right_party_info
         - if @form_params["show_party_name"] == "1"
           %td= duel_result.right_party_info.name if duel_result.right_party_info
@@ -127,6 +174,8 @@
         %td.sep
           = "　勝利" if duel_result.battle_result == -1
           = "引分" if duel_result.battle_result == 0
+        - if @form_params["show_assault"] == "1"
+          %td.sep= assault_text(duel_result.battle_info.right_party_assault.assault_type) if duel_result.battle_info.right_party_assault
         %td.sep= character_link(duel_result.left_party_no)
         %td= character_old_link(@latest_result, duel_result.left_party_no, duel_result.result_no, duel_result.generate_no)
 = paginate(@duel_results)

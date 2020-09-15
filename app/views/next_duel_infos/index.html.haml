@@ -39,9 +39,24 @@
                                  {label: "デュエル", params_name: "is_duel"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_assault",
+                    label: {open: "襲撃タイプを表示する", close: "襲撃タイプを表示しない"},
+                    act_desc: "PK、PKvsPK、PKK……", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "襲撃タイプ", params_name: "assault_type_form", colspan: 3,
+                    checkboxes: [{label: "PK", params_name: "assault_1", class_name: "after_space"},
+                                 {label: "PKvsPK(襲撃)", params_name: "assault_2", class_name: "after_space mobile_br"},
+                                 {label: "被PKK", params_name: "assault_3", class_name: "after_space"},
+                                 {label: "PKvsPK(被襲撃)", params_name: "assault_4", class_name: "after_space", br: true},
+                                 {label: "PKK", params_name: "assault_5", class_name: "after_space"},
+                                 {label: "被PK", params_name: "assault_6"}])
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_current_area",
                     label: {open: "現在地を表示する", close: "現在地を表示しない"},
-                    act_desc: "地形、エリア、進攻度、好戦度", base_first: false)
+                    act_desc: "地形、エリア", base_first: false)
     %tbody.closed
       %tr
         %td.indent
@@ -100,9 +115,12 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :battle_type,"戦闘", default_order: :desc)
       - if @form_params["show_current_area"] == "1"
         %th.sep= sort_link(@search, :current_area_area_level, "地形", default_order: :desc)
         %th.r_sep= sort_link(@search, :current_area_area_id, "エリア", default_order: :desc)
+      - if @form_params["show_assault"] == "1"
+        %th.sep.r_sep= sort_link(@search, :left_party_assault,"襲撃", default_order: :desc)
       - if @form_params["show_member_num"] == "1"
         %th.sep= sort_link(@search, :left_party_info_member_num,"PT人数", default_order: :desc)
       - if @form_params["show_party_name"] == "1"
@@ -114,28 +132,35 @@
         %th= sort_link(@search, :right_party_info_name, "PT名", default_order: :desc)
       - if @form_params["show_member_num"] == "1"
         %th.sep= sort_link(@search, :right_party_info_member_num,"PT人数", default_order: :desc)
+      - if @form_params["show_assault"] == "1"
+        %th.sep= sort_link(@search, :right_party_assault,"襲撃", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @next_duel_infos.each do |next_duel_info|
       %tr
         %td= next_duel_info.result_no
+        %td= duel_type_text(next_duel_info)
         - if @form_params["show_current_area"] == "1"
           %td.sep= area_level_text(next_duel_info.current_area.area) if next_duel_info.current_area && next_duel_info.current_area.area
           %td.r_sep= next_duel_info.current_area.area.name if next_duel_info.current_area && next_duel_info.current_area.area
+        - if @form_params["show_assault"] == "1"
+          %td.sep.r_sep= assault_text(next_duel_info.left_party_assault.assault_type) if next_duel_info.left_party_assault
         - if @form_params["show_member_num"] == "1"
           %td.sep= next_duel_info.left_party_info.member_num if next_duel_info.left_party_info
         - if @form_params["show_party_name"] == "1"
           %td= next_duel_info.left_party_info.name if next_duel_info.left_party_info
         %td.text-nowrap
           - party_members_pc_name_text(next_duel_info.left_party_info.party_members) if next_duel_info.left_party_info
-        %td.text-nowrap
-          VS
         %td
+          VS
+        %td.text-nowrap
           - party_members_pc_name_text(next_duel_info.right_party_info.party_members) if next_duel_info.right_party_info
         - if @form_params["show_party_name"] == "1"
           %td= next_duel_info.right_party_info.name if next_duel_info.right_party_info
         - if @form_params["show_member_num"] == "1"
           %td.sep= next_duel_info.right_party_info.member_num if next_duel_info.right_party_info
+        - if @form_params["show_assault"] == "1"
+          %td.sep= assault_text(next_duel_info.right_party_assault.assault_type) if next_duel_info.right_party_assault
         %td.sep= character_link(next_duel_info.left_party_no)
         %td= character_old_link(@latest_result, next_duel_info.left_party_no, next_duel_info.result_no, next_duel_info.generate_no)
 = paginate(@next_duel_infos)
