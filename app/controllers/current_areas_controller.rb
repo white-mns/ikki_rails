@@ -13,7 +13,7 @@ class CurrentAreasController < ApplicationController
     @current_areas	= @search.result.per(50)
   end
 
-  # GET /current_areas
+  # GET /current_area/totals
   def total
     placeholder_set
     param_set
@@ -29,6 +29,25 @@ class CurrentAreasController < ApplicationController
     @current_areas	= @search.result.area_total()
   end
 
+  # GET /pk_histories
+  def pk
+    placeholder_set
+    param_set
+
+    params_pk_data = Marshal.load(Marshal.dump(params))
+    params_pk_data[:q]["result_no_eq"] = sprintf("%d",@latest_result)
+
+    @search_pk_data	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [party: [party_info: [current_area: :area],]]).page(params_pk_data[:page]).search(params_pk_data[:q])
+    @search_pk_data.sorts = "e_no asc" if @search_pk_data.sorts.empty?
+    @pk_data	= @search_pk_data.result.per(5)
+
+    @count	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [party: [party_info: [party_members: :pc_name]]]).search(params[:q]).result.hit_count()
+    @search	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [party: [party_info: [party_members: :pc_name]]]).page(params[:page]).search(params[:q])
+    @search.sorts = "result_no asc" if @search.sorts.empty?
+    @current_areas	= @search.result.per(100)
+  end
+
+
 
   def param_set
     @form_params = {}
@@ -37,7 +56,15 @@ class CurrentAreasController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+        if action_name != "pk"then
+            params["result_no_form"] ||= sprintf("%d",@latest_result)
+        else
+            params["result_no_form"] ||= sprintf("~%d",@latest_result)
+        end
+    end
+    if action_name == "pk"then
+        @pk_data_eno = PkDatum.notnil().distinct.pluck(:e_no)
+        params[:q][:pc_name_e_no_eq_any] = @pk_data_eno
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
@@ -59,6 +86,22 @@ class CurrentAreasController < ApplicationController
                                           {params_name: "level_5", value: 5, first_checked: false},
                                           {params_name: "level_6", value: 6, first_checked: false}])
 
+    checkbox_params_set_query_any(params, @form_params, query_name: "pk_result_battle_result_eq_any",
+                             checkboxes: [{params_name: "result_win",   value: 1, first_checked: false},
+                                          {params_name: "result_draw",  value: 0, first_checked: false},
+                                          {params_name: "result_lose" , value: -1, first_checked: false}])
+ 
+    checkbox_params_set_query_any(params, @form_params, query_name: "assault_type_eq_any",
+                             checkboxes: [{params_name: "assault_1", value: 1, first_checked: false},
+                                          {params_name: "assault_2", value: 2, first_checked: false},
+                                          {params_name: "assault_3", value: 3, first_checked: false},
+                                          {params_name: "assault_4", value: 4, first_checked: false},
+                                          {params_name: "assault_5", value: 5, first_checked: false},
+                                          {params_name: "assault_6", value: 6, first_checked: false}])
+
+    toggle_params_to_variable(params, @form_params, params_name: "show_current_area")
+    toggle_params_to_variable(params, @form_params, params_name: "show_battle_result")
+    toggle_params_to_variable(params, @form_params, params_name: "show_assault")
   end
   # GET /current_areas/1
   #def show

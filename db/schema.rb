@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_12_223846) do
+ActiveRecord::Schema.define(version: 2020_09_14_125746) do
 
   create_table "area_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "area_id"
@@ -339,6 +339,17 @@ ActiveRecord::Schema.define(version: 2020_09_12_223846) do
     t.index ["pk_win_num"], name: "index_pk_data_on_pk_win_num"
     t.index ["pkk_num"], name: "index_pk_data_on_pkk_num"
     t.index ["pkk_win_num"], name: "index_pk_data_on_pkk_win_num"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "pk_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "battle_result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_result"], name: "index_pk_results_on_battle_result"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 

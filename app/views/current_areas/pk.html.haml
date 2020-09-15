@@ -1,0 +1,177 @@
+- @page_title = "PK活動履歴一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search, url: :pk_histories do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_current_area",
+                    label: {open: "現在地で絞り込む", close: "現在地での絞り込みを表示しない"},
+                    act_desc: "地形、エリア、進攻度、好戦度", base_first: false)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "地形", params_name: "level_form", colspan: 3,
+                    checkboxes: [{label: "平原", params_name: "level_1", class_name: "after_space"},
+                                 {label: "水辺", params_name: "level_2", class_name: "after_space"},
+                                 {label: "砂地", params_name: "level_3", class_name: "after_space mobile_br"},
+                                 {label: "城内", params_name: "level_4", class_name: "after_space"},
+                                 {label: "森林", params_name: "level_5", class_name: "after_space"},
+                                 {label: "山岳", params_name: "level_6"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エリア", params_name: "name_form", placeholder: "Area", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "進攻度", params_name: "advance_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "好戦度", params_name: "bellicosity_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_buttle_result",
+                    label: {open: "PK結果で絞り込む", close: "PK結果での絞り込みを表示しない"}, base_first: true)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "勝敗", params_name: "battle_result_form", colspan: 3, 
+                    checkboxes: [{label: "勝利", params_name: "result_win", class_name: "after_space"},
+                                 {label: "引分", params_name: "result_draw", class_name: "after_space"},
+                                 {label: "敗北", params_name: "result_lose"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_assault",
+                    label: {open: "PK予告で絞り込む", close: "PK予告での絞り込みを表示しない"}, base_first: true)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "予告", params_name: "assault_type_form", colspan: 3,
+                    checkboxes: [{label: "PK", params_name: "assault_1", class_name: "after_space"},
+                                 {label: "PKvsPK(襲撃)", params_name: "assault_2", class_name: "after_space mobile_br"},
+                                 {label: "被PKK", params_name: "assault_3", class_name: "after_space"},
+                                 {label: "PKvsPK(被襲撃)", params_name: "assault_4", class_name: "after_space", br: true},
+                                 {label: "PKK", params_name: "assault_5", class_name: "after_space"},
+                                 {label: "被PK", params_name: "assault_6"}])
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+%h3.graph_title PK情報
+-if @pk_data.size < 4
+  - @pk_data.each do |pk_datum|
+    -if pk_datum.pc_name
+      - pk_name_link(@latest_result, pk_datum.e_no, pk_datum.pc_name)
+    - else
+      = pc_name_text(pk_datum.e_no, pk_datum.old_pc_name)
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+      %tbody
+        %tr
+          %td 進行
+          %td{colspan:5}
+            = "[" + area_level_text(pk_datum.party.party_info.current_area.area) + "]" if pk_datum.party && pk_datum.party.party_info && pk_datum.party.party_info.current_area && pk_datum.party.party_info.current_area.area
+            = pk_datum.party.party_info.current_area.area.name if pk_datum.party && pk_datum.party.party_info && pk_datum.party.party_info.current_area && pk_datum.party.party_info.current_area.area
+            = "【進行度：" + sprintf("%d", pk_datum.party.party_info.current_area.advance) + "】" if pk_datum.party && pk_datum.party.party_info
+        %tr
+          %td PK回数
+          %td= pk_datum.pk_num
+          %td PK勝利数
+          %td= pk_datum.pk_win_num
+          %td 最終PK予告
+          %td= pk_datum.latest_pk_result_no
+        %tr
+          %td 賞金
+          %td{colspan:5}= pk_datum.prize.prize if pk_datum.prize
+- else
+  ※PK情報を表示するには検索で4人以内に絞り込んでください
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+    %tbody
+      %tr
+        %td 進行
+        %td{colspan:5} ---
+      %tr
+        %td PK回数
+        %td ---
+        %td PK勝利数
+        %td ---
+        %td 最終PK予告
+        %td ---
+      %tr
+        %td 賞金
+        %td{colspan:5} ---
+%br
+%br
+
+%h3.graph_title 活動履歴
+
+= paginate(@current_areas)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th= sort_link(@search, :area_level, "地形", default_order: :desc)
+      %th= sort_link(@search, :area_id, "エリア", default_order: :desc)
+      %th= sort_link(@search, :advance, "進攻度", default_order: :desc)
+      %th= sort_link(@search, :bellicosity, "好戦度", default_order: :desc)
+      %th.sep= sort_link(@search, :advance, "PK結果", default_order: :desc)
+      %th= sort_link(@search, :assault_assault_type, "PK予告", default_order: :desc)
+      %th.sep= sort_link(@search, :party_no,"パーティメンバー(Eno)", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @current_areas.each do |current_area|
+      %tr
+        %td= current_area.result_no
+        %td= pc_name_text(current_area.e_no, current_area.pc_name)
+        %td= area_level_text(current_area.area) if current_area.area
+        %td= current_area.area.name if current_area.area
+        %td= current_area.advance
+        %td= current_area.bellicosity
+        %td.sep
+          = "勝利" if current_area.pk_result && current_area.pk_result.battle_result == 1
+          = "　引分" if current_area.pk_result && current_area.pk_result.battle_result == 0
+          = "　　敗北" if current_area.pk_result && current_area.pk_result.battle_result == -1
+        %td= assault_text(current_area.assault.assault_type) if current_area.assault
+        %td.sep
+          - party_members_pc_name_text(current_area.party.party_info.party_members) if current_area.party && current_area.party.party_info && current_area.party.party_info.party_members
+        %td.sep= character_link(current_area.e_no)
+        %td= character_old_link(@latest_result, current_area.e_no, current_area.result_no, current_area.generate_no)
+= paginate(@current_areas)

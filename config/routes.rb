@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pk_results
   resources :prizes
   resources :assaults
   resources :pk_data
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   resources :next_battle_enemies
   resources :party_infos
   resources :parties
+  get "pk_histories",  :to => "current_areas#pk",  :as => "pk_histories"
   get "current_area/totals",  :to => "current_areas#total",  :as => "current_area_totals"
   resources :current_areas
   resources :area_data

@@ -123,7 +123,8 @@
       %th= sort_link(@search, :prize_prize, "賞金", default_order: :desc)
       %th= sort_link(@search, :status_clv, "CLV", default_order: :desc)
       %th= sort_link(@search, :party_party_info_member_num, "PT人数", default_order: :desc)
-      %th.sep{colspan: "2"} 結果リンク
+      %th.sep 活動履歴
+      %th{colspan: "2"} 結果リンク
   %tbody
     - @pk_data.each do |pk_datum|
       %tr
@@ -147,6 +148,7 @@
         %td= pk_datum.prize.prize if pk_datum.prize
         %td= pk_datum.status.clv if pk_datum.status
         %td= pk_datum.party.party_info.member_num if pk_datum.party && pk_datum.party.party_info
+        %td.sep= pk_history_link(pk_datum.e_no)
         %td.sep= character_link(pk_datum.e_no)
         %td= character_old_link(@latest_result, pk_datum.e_no, pk_datum.result_no, pk_datum.generate_no)
 = paginate(@pk_data)

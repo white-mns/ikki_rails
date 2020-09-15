@@ -1,4 +1,4 @@
-- @page_title = "PK襲撃種別一覧"
+- @page_title = "デュエル勝敗一覧"
 %h1= @page_title
 
 .card.desc
@@ -31,18 +31,13 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
-      %tr
-        %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,  label: "襲撃タイプ", params_name: "assault_type_form", colspan: 3,
-                    checkboxes: [{label: "PK", params_name: "assault_1", class_name: "after_space"},
-                                 {label: "PKvsPK(襲撃)", params_name: "assault_2", class_name: "after_space mobile_br"},
-                                 {label: "被PKK", params_name: "assault_3", class_name: "after_space"},
-                                 {label: "PKvsPK(被襲撃)", params_name: "assault_4", class_name: "after_space", br: true},
-                                 {label: "PKK", params_name: "assault_5", class_name: "after_space"},
-                                 {label: "被PK", params_name: "assault_6"}])
+        - td_form(f, @form_params, @placeholder,                         label: "勝敗", params_name: "battle_result_form", colspan: 3, 
+                    checkboxes: [{label: "勝利", params_name: "result_win", class_name: "after_space"},
+                                 {label: "引分", params_name: "result_draw", class_name: "after_space"},
+                                 {label: "敗北", params_name: "result_lose"}])
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
@@ -50,7 +45,7 @@
           - search_submit_button
 
 
-= paginate(@assaults)
+= paginate(@pk_results)
 %br
 ヒット数：#{ @count }件
 %br
@@ -61,14 +56,17 @@
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      %th= sort_link(@search, :assault_type, "襲撃", default_order: :desc)
+      %th= sort_link(@search, :battle_result, "勝敗", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
-    - @assaults.each do |assault|
+    - @pk_results.each do |pk_result|
       %tr
-        %td= assault.result_no
-        %td= pc_name_text(assault.e_no, assault.pc_name)
-        %td= assault_text(assault.assault_type)
-        %td.sep= character_link(assault.e_no)
-        %td= character_old_link(@latest_result, assault.e_no, assault.result_no, assault.generate_no)
-= paginate(@assaults)
+        %td= pk_result.result_no
+        %td= pc_name_text(pk_result.e_no, pk_result.pc_name)
+        %td
+          = "勝利" if pk_result.battle_result == 1
+          = "　引分" if pk_result.battle_result == 0
+          = "　　敗北" if pk_result.battle_result == -1
+        %td.sep= character_link(pk_result.e_no)
+        %td= character_old_link(@latest_result, pk_result.e_no, pk_result.result_no, pk_result.generate_no)
+= paginate(@pk_results)

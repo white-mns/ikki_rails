@@ -171,7 +171,19 @@ module ApplicationHelper
         end
 
         party_members.each do |party_member|
-            haml_concat pc_name_text(party_member.e_no, party_member.pc_name)
+            if party_member.pc_name then
+                haml_concat party_member.pc_name.name.html_safe
+            end
+            haml_concat "("
+
+            result_no_text = sprintf("%d", party_member.result_no)
+            generate_text  = party_member.generate_no > 0 ? "_" + sprintf("%d", party_member.generate_no) : ""
+            file_name = sprintf("%d", party_member.e_no)
+            haml_tag :a, href: "https://archives.teiki.org/risu/ikki/1/result"+result_no_text+generate_text+"/k/k"+ file_name+".html", target: "_blank" do
+                haml_concat party_member.e_no
+            end
+
+            haml_concat ")"
             haml_tag :br
         end
     end
