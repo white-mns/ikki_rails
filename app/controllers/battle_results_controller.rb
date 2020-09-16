@@ -56,6 +56,7 @@ class BattleResultsController < ApplicationController
                                           {params_name: "member_num_2", value: 2, first_checked: false},
                                           {params_name: "member_num_3", value: 3, first_checked: false},
                                           {params_name: "member_num_4", value: 4, first_checked: false}])
+    checkbox_params_set_query_single(params, @form_params, checkbox: {params_name: "member_num_5", value: 5, query_name: "party_info_member_num_gteq_any", first_checked: false})
  
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_info_is_boss_eq_any",
                              checkboxes: [{params_name: "is_encounter", value: 0, first_checked: false},

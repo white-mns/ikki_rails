@@ -37,12 +37,15 @@
                     checkboxes: [{label: "1", params_name: "member_num_1", class_name: "after_space"},
                                  {label: "2", params_name: "member_num_2", class_name: "after_space"},
                                  {label: "3", params_name: "member_num_3", class_name: "after_space"},
-                                 {label: "4", params_name: "member_num_4", class_name: "after_space"}])
+                                 {label: "4", params_name: "member_num_4", class_name: "after_space"},
+                                 {label: "5~", params_name: "member_num_5", class_name: "after_space"}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "戦闘", params_name: "party_type_form", colspan: 3, 
-                    checkboxes: [{label: "今回戦闘", params_name: "is_battle", class_name: "after_space mobile_br"},
-                                 {label: "次回予告", params_name: "is_next"}])
+                    checkboxes: [{label: "今回攻城戦", params_name: "is_battle", class_name: "after_space"},
+                                 {label: "次回攻城戦", params_name: "is_next_battle", class_name: "after_space mobile_br"},
+                                 {label: "今回対人戦", params_name: "is_duel", class_name: "after_space"},
+                                 {label: "次回対人戦", params_name: "is_next_duel"}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")

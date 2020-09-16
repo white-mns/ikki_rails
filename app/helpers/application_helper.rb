@@ -159,8 +159,10 @@ module ApplicationHelper
             return
         end
 
-        if party.party_type == 0 then "今回戦闘"
-        elsif party.party_type == 1 then "次回予告"
+        if party.party_type == 0 then "今回攻城"
+        elsif party.party_type == 1 then "次回攻城"
+        elsif party.party_type == 10 then "今回対人"
+        elsif party.party_type == 11 then "次回対人"
         else "？"
         end
     end

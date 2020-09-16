@@ -43,10 +43,13 @@ class PartyInfosController < ApplicationController
                                           {params_name: "member_num_2", value: 2, first_checked: false},
                                           {params_name: "member_num_3", value: 3, first_checked: false},
                                           {params_name: "member_num_4", value: 4, first_checked: false}])
+    checkbox_params_set_query_single(params, @form_params, checkbox: {params_name: "member_num_5", value: 5, query_name: "member_num_gteq_any", first_checked: false})
  
     checkbox_params_set_query_any(params, @form_params, query_name: "party_type_eq_any",
-                             checkboxes: [{params_name: "is_battle", value: 0},
-                                          {params_name: "is_next" ,  value: 1, first_checked: true}])
+                             checkboxes: [{params_name: "is_battle",       value: 0},
+                                          {params_name: "is_next_battle" , value: 1, first_checked: true},
+                                          {params_name: "is_duel" ,        value: 10},
+                                          {params_name: "is_next_duel" ,   value: 11}])
  
     checkbox_params_set_query_any(params, @form_params, query_name: "current_area_area_level_eq_any",
                              checkboxes: [{params_name: "level_1", value: 1, first_checked: false},
