@@ -56,8 +56,8 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "好戦度", params_name: "bellicosity_form", placeholder: "Number")
 
     - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_buttle_result",
-                    label: {open: "PK結果で絞り込む", close: "PK結果での絞り込みを表示しない"}, base_first: true)
+    - tbody_toggle(@form_params, params_name: "show_battle_result",
+                    label: {open: "PK結果で絞り込む", close: "PK結果での絞り込みを表示しない"}, base_first: false)
     %tbody.closed
       %tr.sep
         %td.indent
@@ -68,7 +68,7 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_assault",
-                    label: {open: "PK予告で絞り込む", close: "PK予告での絞り込みを表示しない"}, base_first: true)
+                    label: {open: "PK予告で絞り込む", close: "PK予告での絞り込みを表示しない"}, base_first: false)
     %tbody.closed
       %tr
         %td.indent
@@ -101,9 +101,9 @@
         %tr
           %td 進行
           %td{colspan:5}
-            = "[" + area_level_text(pk_datum.party.party_info.current_area.area) + "]" if pk_datum.party && pk_datum.party.party_info && pk_datum.party.party_info.current_area && pk_datum.party.party_info.current_area.area
-            = pk_datum.party.party_info.current_area.area.name if pk_datum.party && pk_datum.party.party_info && pk_datum.party.party_info.current_area && pk_datum.party.party_info.current_area.area
-            = "【進行度：" + sprintf("%d", pk_datum.party.party_info.current_area.advance) + "】" if pk_datum.party && pk_datum.party.party_info
+            = "[" + area_level_text(pk_datum.next_battle_party.party_info.current_area.area) + "]" if pk_datum.next_battle_party && pk_datum.next_battle_party.party_info && pk_datum.next_battle_party.party_info.current_area && pk_datum.next_battle_party.party_info.current_area.area
+            = pk_datum.next_battle_party.party_info.current_area.area.name if pk_datum.next_battle_party && pk_datum.next_battle_party.party_info && pk_datum.next_battle_party.party_info.current_area && pk_datum.next_battle_party.party_info.current_area.area
+            = "【進行度：" + sprintf("%d", pk_datum.next_battle_party.party_info.current_area.advance) + "】" if pk_datum.next_battle_party && pk_datum.next_battle_party.party_info
         %tr
           %td PK回数
           %td= pk_datum.pk_num
@@ -173,6 +173,8 @@
         %td.sep
           - if current_area.next_duel_party && current_area.next_duel_party.party_info && current_area.next_duel_party.party_info.party_members 
             - party_members_pc_name_text(current_area.next_duel_party.party_info.party_members)
+          - elsif current_area.next_battle_party && current_area.next_battle_party.party_info && current_area.next_battle_party.party_info.party_members 
+            - party_members_pc_name_text(current_area.next_battle_party.party_info.party_members)
         %td.sep= character_link(current_area.e_no)
         %td= character_old_link(@latest_result, current_area.e_no, current_area.result_no, current_area.generate_no)
 = paginate(@current_areas)

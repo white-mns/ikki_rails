@@ -7,8 +7,8 @@ class PkDataController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [party: [:next_duel_party_info, next_battle_party_info: [current_area: :area]]]).search(params[:q]).result.hit_count()
-    @search	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [party: [:next_duel_party_info, next_battle_party_info: [current_area: :area]]]).page(params[:page]).search(params[:q])
+    @count	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area]]], [next_duel_party: [party_info: [current_area: :area]]]).search(params[:q]).result.hit_count()
+    @search	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area]]], [next_duel_party: [party_info: [current_area: :area]]]).page(params[:page]).search(params[:q])
     @search.sorts = "e_no asc" if @search.sorts.empty?
     @pk_data	= @search.result.per(50)
   end
@@ -38,19 +38,19 @@ class PkDataController < ApplicationController
     params_to_form(params, @form_params, column_name: "status_clv", params_name: "clv_form", type: "number")
     params_to_form(params, @form_params, column_name: "status_ps", params_name: "ps_form", type: "number")
 
-    params_to_form(params, @form_params, column_name: "party_party_info_current_area_area_name", params_name: "area_form", type: "text")
-    params_to_form(params, @form_params, column_name: "party_party_info_current_area_advance", params_name: "advance_form", type: "number")
-    params_to_form(params, @form_params, column_name: "party_party_info_current_area_bellicosity", params_name: "bellicosity_form", type: "number")
+    params_to_form(params, @form_params, column_name: "next_battle_party_party_info_current_area_area_name", params_name: "area_form", type: "text")
+    params_to_form(params, @form_params, column_name: "next_battle_party_party_info_current_area_advance", params_name: "advance_form", type: "number")
+    params_to_form(params, @form_params, column_name: "next_battle_party_party_info_current_area_bellicosity", params_name: "bellicosity_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "prize_prize", params_name: "prize_form", type: "number")
 
-    checkbox_params_set_query_any(params, @form_params, query_name: "party_party_info_member_num_eq_any",
+    checkbox_params_set_query_any(params, @form_params, query_name: "next_duel_party_party_info_member_num_eq_any",
                              checkboxes: [{params_name: "member_num_1", value: 1, first_checked: false},
                                           {params_name: "member_num_2", value: 2, first_checked: false},
                                           {params_name: "member_num_3", value: 3, first_checked: false},
                                           {params_name: "member_num_4", value: 4, first_checked: false}])
  
-    checkbox_params_set_query_any(params, @form_params, query_name: "party_party_info_current_area_area_level_eq_any",
+    checkbox_params_set_query_any(params, @form_params, query_name: "next_battle_party_party_info_current_area_area_level_eq_any",
                              checkboxes: [{params_name: "level_1", value: 1, first_checked: false},
                                           {params_name: "level_2", value: 2, first_checked: false},
                                           {params_name: "level_3", value: 3, first_checked: false},

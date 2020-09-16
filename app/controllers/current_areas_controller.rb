@@ -37,7 +37,7 @@ class CurrentAreasController < ApplicationController
     params_pk_data = Marshal.load(Marshal.dump(params))
     params_pk_data[:q]["result_no_eq"] = sprintf("%d",@latest_result)
 
-    @search_pk_data	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [party: [party_info: [current_area: :area],]]).page(params_pk_data[:page]).search(params_pk_data[:q])
+    @search_pk_data	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area],]]).page(params_pk_data[:page]).search(params_pk_data[:q])
     @search_pk_data.sorts = "e_no asc" if @search_pk_data.sorts.empty?
     @pk_data	= @search_pk_data.result.per(5)
 
@@ -91,7 +91,7 @@ class CurrentAreasController < ApplicationController
                                           {params_name: "result_draw",  value: 0, first_checked: false},
                                           {params_name: "result_lose" , value: -1, first_checked: false}])
  
-    checkbox_params_set_query_any(params, @form_params, query_name: "assault_type_eq_any",
+    checkbox_params_set_query_any(params, @form_params, query_name: "assault_assault_type_eq_any",
                              checkboxes: [{params_name: "assault_1", value: 1, first_checked: false},
                                           {params_name: "assault_2", value: 2, first_checked: false},
                                           {params_name: "assault_3", value: 3, first_checked: false},
