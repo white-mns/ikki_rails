@@ -171,7 +171,8 @@
           = "　　敗北" if current_area.pk_result && current_area.pk_result.battle_result == -1
         %td= assault_text(current_area.assault.assault_type) if current_area.assault
         %td.sep
-          - party_members_pc_name_text(current_area.party.party_info.party_members) if current_area.party && current_area.party.party_info && current_area.party.party_info.party_members
+          - if current_area.next_duel_party && current_area.next_duel_party.party_info && current_area.next_duel_party.party_info.party_members 
+            - party_members_pc_name_text(current_area.next_duel_party.party_info.party_members)
         %td.sep= character_link(current_area.e_no)
         %td= character_old_link(@latest_result, current_area.e_no, current_area.result_no, current_area.generate_no)
 = paginate(@current_areas)

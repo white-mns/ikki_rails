@@ -122,7 +122,7 @@
       %th.sep= sort_link(@search, :status_ps, "PS", default_order: :desc)
       %th= sort_link(@search, :prize_prize, "賞金", default_order: :desc)
       %th= sort_link(@search, :status_clv, "CLV", default_order: :desc)
-      %th= sort_link(@search, :party_party_info_member_num, "PT人数", default_order: :desc)
+      %th= sort_link(@search, :party_next_duel_party_info_member_num, "PT人数", default_order: :desc)
       %th.sep 活動履歴
       %th{colspan: "2"} 結果リンク
   %tbody
@@ -134,9 +134,9 @@
             = pc_name_text(pk_datum.e_no, pk_datum.pc_name)
           - else
             = pc_name_text(pk_datum.e_no, pk_datum.old_pc_name)
-        %td.sep= area_level_text(pk_datum.party.party_info.current_area.area) if pk_datum.party && pk_datum.party.party_info && pk_datum.party.party_info.current_area && pk_datum.party.party_info.current_area.area
-        %td= pk_datum.party.party_info.current_area.area.name if pk_datum.party && pk_datum.party.party_info && pk_datum.party.party_info.current_area && pk_datum.party.party_info.current_area.area
-        %td= pk_datum.party.party_info.current_area.advance if pk_datum.party && pk_datum.party.party_info
+        %td.sep= area_level_text(pk_datum.party.next_battle_party_info.current_area.area) if pk_datum.party && pk_datum.party.next_battle_party_info && pk_datum.party.next_battle_party_info.current_area && pk_datum.party.next_battle_party_info.current_area.area
+        %td= pk_datum.party.next_battle_party_info.current_area.area.name if pk_datum.party && pk_datum.party.next_battle_party_info && pk_datum.party.next_battle_party_info.current_area && pk_datum.party.next_battle_party_info.current_area.area
+        %td= pk_datum.party.next_battle_party_info.current_area.advance if pk_datum.party && pk_datum.party.next_battle_party_info
         %td.sep= pk_datum.pk_num
         %td= pk_datum.pk_win_num
         %td= pk_datum.latest_pk_result_no
@@ -147,7 +147,7 @@
         %td.sep= pk_datum.status.ps if pk_datum.status
         %td= pk_datum.prize.prize if pk_datum.prize
         %td= pk_datum.status.clv if pk_datum.status
-        %td= pk_datum.party.party_info.member_num if pk_datum.party && pk_datum.party.party_info
+        %td= pk_datum.party.next_duel_party_info.member_num if pk_datum.party && pk_datum.party.next_duel_party_info
         %td.sep= pk_history_link(pk_datum.e_no)
         %td.sep= character_link(pk_datum.e_no)
         %td= character_old_link(@latest_result, pk_datum.e_no, pk_datum.result_no, pk_datum.generate_no)

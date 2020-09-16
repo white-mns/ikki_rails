@@ -41,8 +41,8 @@ class CurrentAreasController < ApplicationController
     @search_pk_data.sorts = "e_no asc" if @search_pk_data.sorts.empty?
     @pk_data	= @search_pk_data.result.per(5)
 
-    @count	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [party: [party_info: [party_members: :pc_name]]]).search(params[:q]).result.hit_count()
-    @search	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [party: [party_info: [party_members: :pc_name]]]).page(params[:page]).search(params[:q])
+    @count	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [next_duel_party: [party_info: [party_members: :pc_name]]], [next_battle_party: [party_info: [party_members: :pc_name]]]).search(params[:q]).result.hit_count()
+    @search	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [next_duel_party: [party_info: [party_members: :pc_name]]], [next_battle_party: [party_info: [party_members: :pc_name]]]).page(params[:page]).search(params[:q])
     @search.sorts = "result_no asc" if @search.sorts.empty?
     @current_areas	= @search.result.per(100)
   end
