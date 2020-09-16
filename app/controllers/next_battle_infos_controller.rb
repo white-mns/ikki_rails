@@ -39,6 +39,7 @@ class NextBattleInfosController < ApplicationController
 
     params_to_form(params, @form_params, column_name: "enemy_party_name_name", params_name: "enemy_party_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "party_info_name", params_name: "party_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "enemy_members_enemy_name", params_name: "enemy_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "current_area_advance", params_name: "advance_form", type: "number")
     params_to_form(params, @form_params, column_name: "current_area_bellicosity", params_name: "bellicosity_form", type: "number")

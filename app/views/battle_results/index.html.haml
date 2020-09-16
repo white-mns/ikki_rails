@@ -134,7 +134,7 @@
           %td= battle_result.party_info.name if battle_result.battle_info && battle_result.party_info
         %td.text-nowrap
           - party_members_pc_name_text(battle_result.party_info.party_members) if battle_result.party_info
-        %td.sep
+        %td.sep.text-nowrap
           = "勝利" if battle_result.battle_result == 1
           = "　引分" if battle_result.battle_result == 0
           = "　　敗北" if battle_result.battle_result == -1

@@ -13,6 +13,19 @@ class NewNextEnemiesController < ApplicationController
     @new_next_enemies	= @search.result.per(50)
   end
 
+  # GET /bosses
+  def boss
+    placeholder_set
+    param_set
+    params[:q][:is_boss_eq] = 1
+
+    @count	= NewNextEnemy.notnil().includes(:enemy, :area, :new_battle, :new_defeat).search(params[:q]).result.hit_count()
+    @search	= NewNextEnemy.notnil().includes(:enemy, :area, :new_battle, :new_defeat).page(params[:page]).search(params[:q])
+    @search.sorts = "result_no asc" if @search.sorts.empty?
+    @new_next_enemies	= @search.result.per(50)
+  end
+
+
   def param_set
     @form_params = {}
 

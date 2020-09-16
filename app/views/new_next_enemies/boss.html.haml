@@ -1,0 +1,80 @@
+- @page_title = "ボス一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search, url: :bosses do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "新出予告", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder,  label: "地形", params_name: "level_form", colspan: 3,
+                    checkboxes: [{label: "平原", params_name: "level_1", class_name: "after_space"},
+                                 {label: "水辺", params_name: "level_2", class_name: "after_space"},
+                                 {label: "砂地", params_name: "level_3", class_name: "after_space mobile_br"},
+                                 {label: "城内", params_name: "level_4", class_name: "after_space"},
+                                 {label: "森林", params_name: "level_5", class_name: "after_space"},
+                                 {label: "山岳", params_name: "level_6"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エリア", params_name: "name_form", placeholder: "Area")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "進攻度", params_name: "advance_form", placeholder: "Number") 
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@new_next_enemies)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"新出予告", default_order: :desc)
+      %th.sep= sort_link(@search, :area_level, "地形", default_order: :desc)
+      %th= sort_link(@search, :area_id, "エリア", default_order: :desc)
+      %th= sort_link(@search, :advance, "進攻度", default_order: :desc)
+      %th.sep= sort_link(@search, :enemy_id, "敵名", default_order: :desc)
+      %th{colspan: 3}
+  %tbody
+    - @new_next_enemies.each do |new_next_enemy|
+      %tr
+        %td= new_next_enemy.result_no
+        %td.sep= area_level_text(new_next_enemy.area) if new_next_enemy.area
+        %td= new_next_enemy.area.name if new_next_enemy.area
+        %td= new_next_enemy.advance
+        %td.sep= new_next_enemy.enemy.name if new_next_enemy.enemy
+        %td= detail_new_next_boss_link(new_next_enemy)
+        %td= detail_new_battle_boss_link(new_next_enemy)
+        %td= detail_new_defeat_boss_link(new_next_enemy)
+= paginate(@new_next_enemies)

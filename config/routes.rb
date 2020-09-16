@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :new_battle_enemies
   resources :duel_results
   resources :battle_results
+  get "bosses",  :to => "new_next_enemies#boss",  :as => "bosses"
   resources :new_next_enemies
   resources :next_duel_infos
   resources :next_battle_infos
