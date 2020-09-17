@@ -60,6 +60,7 @@
     %tr
       %th= sort_link(@search, :area_level, "地形", default_order: :desc)
       %th= sort_link(@search, :area_id, "エリア", default_order: :desc)
+      %th= 0
       %th= 1
       %th= 2
       %th= 3
@@ -75,7 +76,8 @@
       %tr
         %td= area_level_text(area.area) if area.area
         %td= area.area.name if area.area
-        %td= area_total_link(area.result_no, area.area, 1, @current_areas) 
+        %td= area_total_link(area.result_no, area.area, 0, @current_areas)
+        %td= area_total_link(area.result_no, area.area, 1, @current_areas)
         %td= area_total_link(area.result_no, area.area, 2, @current_areas)
         %td= area_total_link(area.result_no, area.area, 3, @current_areas)
         %td= area_total_link(area.result_no, area.area, 4, @current_areas)
