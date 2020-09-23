@@ -48,9 +48,9 @@ class BattleResultsController < ApplicationController
     params_to_form(params, @form_params, column_name: "battle_info_current_area_area_name", params_name: "name_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_result_eq_any",
-                             checkboxes: [{params_name: "result_win",   value: 1, first_checked: true},
-                                          {params_name: "result_draw",  value: 0, first_checked: true},
-                                          {params_name: "result_lose" , value: -1, first_checked: true}])
+                             checkboxes: [{params_name: "result_win",   value: 1, first_checked: false},
+                                          {params_name: "result_draw",  value: 0, first_checked: false},
+                                          {params_name: "result_lose" , value: -1, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "party_info_member_num_eq_any",
                              checkboxes: [{params_name: "member_num_1", value: 1, first_checked: false},

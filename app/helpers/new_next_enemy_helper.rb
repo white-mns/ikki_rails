@@ -28,6 +28,6 @@ module NewNextEnemyHelper
             return
         end
 
-        link_to "初突破", battle_results_path + "?result_no_form=" + sprintf("%d", object.new_defeat.result_no) + "&enemy_form=\"" + object.enemy.name + "\""
+        link_to "初突破", battle_results_path + "?result_no_form=" + sprintf("%d", object.new_defeat.result_no) + "&result_win=on&enemy_form=\"" + object.enemy.name + "\""
     end
 end
