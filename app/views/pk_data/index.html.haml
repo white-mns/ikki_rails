@@ -1,4 +1,7 @@
-- @page_title = "PK一覧"
+- if @form_params["show_pkk"] == "1"
+  - @page_title = "PK・PKK一覧"
+- else
+  - @page_title = "PK一覧"
 %h1= @page_title
 
 .card.desc
