@@ -147,7 +147,11 @@
         %td.sep= pk_datum.status.ps if pk_datum.status
         %td= pk_datum.prize.prize if pk_datum.prize
         %td= pk_datum.status.clv if pk_datum.status
-        %td= pk_datum.next_duel_party.party_info.member_num if pk_datum.next_duel_party && pk_datum.next_duel_party.party_info
+        %td
+          - if pk_datum.next_duel_party && pk_datum.next_duel_party.party_info
+            = pk_datum.next_duel_party.party_info.member_num
+          - elsif pk_datum.next_battle_party && pk_datum.next_battle_party.party_info
+            = pk_datum.next_battle_party.party_info.member_num
         %td.sep= pk_history_link(pk_datum.e_no)
         %td.sep= character_link(pk_datum.e_no)
         %td= character_old_link(@latest_result, pk_datum.e_no, pk_datum.result_no, pk_datum.generate_no)
