@@ -70,8 +70,8 @@ class DuelResultsController < ApplicationController
                                           {params_name: "level_6", value: 6, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_info_battle_type_eq_any",
-                             checkboxes: [{params_name: "is_game", value: 0, first_checked: true},
-                                          {params_name: "is_duel" ,  value: 1, first_checked: true}])
+                             checkboxes: [{params_name: "is_game", value: 0, first_checked: false},
+                                          {params_name: "is_duel", value: 1, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_result_eq_any",
                              checkboxes: [{params_name: "result_win",   value: 1, first_checked: true},
