@@ -10,7 +10,7 @@ IkkiFantasyデータ小屋は[Ikki Fantasy](http://lisge.com/)を解析して得
 # 動作環境
 以下の環境での動作を確認しています  
   
-CentOS Linux release 8.2.2004  
+OS:CentOS Linux release 8.2.2004  
 DB:MySQL 8.0.21  
 Ruby:2.7.1  
 Rails:6.x  
