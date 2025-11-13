@@ -1,5 +1,5 @@
 # IkkiFantasyデータ小屋　表示用Railsアプリ
-IkkiFantasyデータ小屋は[Ikki Fantasy](http://lisge.com/)を解析して得られるデータを扱った情報サイトです。  
+IkkiFantasyデータ小屋はIkki Fantasyを解析して得られるデータを扱った情報サイトです。  
 このプログラムはIkkiFantasyデータ小屋で実際に使用している表示用のRailsアプリです。  
 データ小屋の解析部分については[別リポジトリ](https://github.com/white-mns/ikki_parse)を参照ください。
 
@@ -10,11 +10,11 @@ IkkiFantasyデータ小屋は[Ikki Fantasy](http://lisge.com/)を解析して得
 # 動作環境
 以下の環境での動作を確認しています  
   
-OS:CentOS Linux release 8.2.2004  
-DB:MySQL 8.0.21  
-Ruby:2.7.1  
+OS:Rocky Linux release 10.0  
+DB:MySQL 8.4.4  
+Ruby:3.3.9  
 Rails:6.x  
-gcc:8.3.1
+gcc:14.2.1  
 
 ## 使い方
 ・Railsの使い方を調べてなんやかんやして自分のRailsアプリが動くようにします。  
@@ -31,6 +31,7 @@ gcc:8.3.1
  
     bundle exec rake db:create
     bundle exec rake db:migrate
+    bundle exec rails dartsass:build
     ./unicorn start
     
 他の方法でRailsが動かせるならUnicornである必要はありません。  
