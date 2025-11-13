@@ -7,8 +7,8 @@ class NewSkillsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NewSkill.notnil().includes(skill: :embryo).search(params[:q]).result.hit_count()
-    @search	= NewSkill.notnil().includes(skill: :embryo).page(params[:page]).search(params[:q])
+    @count	= NewSkill.notnil().includes(skill: :embryo).ransack(params[:q]).result.hit_count()
+    @search	= NewSkill.notnil().includes(skill: :embryo).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_skills	= @search.result.per(50)
   end

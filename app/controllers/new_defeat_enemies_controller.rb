@@ -7,8 +7,8 @@ class NewDefeatEnemiesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NewDefeatEnemy.notnil().includes(:enemy, [party_info: [party_members: :pc_name]], [battle_info: [:current_area, :enemy_party_name]]).search(params[:q]).result.hit_count()
-    @search	= NewDefeatEnemy.notnil().includes(:enemy, [party_info: [party_members: :pc_name]], [battle_info: [:current_area, :enemy_party_name]]).page(params[:page]).search(params[:q])
+    @count	= NewDefeatEnemy.notnil().includes(:enemy, [party_info: [party_members: :pc_name]], [battle_info: [:current_area, :enemy_party_name]]).ransack(params[:q]).result.hit_count()
+    @search	= NewDefeatEnemy.notnil().includes(:enemy, [party_info: [party_members: :pc_name]], [battle_info: [:current_area, :enemy_party_name]]).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_defeat_enemies	= @search.result.per(50)
   end

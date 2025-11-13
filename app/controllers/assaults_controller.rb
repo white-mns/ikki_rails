@@ -7,8 +7,8 @@ class AssaultsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Assault.notnil().includes(:pc_name).search(params[:q]).result.hit_count()
-    @search	= Assault.notnil().includes(:pc_name).page(params[:page]).search(params[:q])
+    @count	= Assault.notnil().includes(:pc_name).ransack(params[:q]).result.hit_count()
+    @search	= Assault.notnil().includes(:pc_name).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @assaults	= @search.result.per(50)
   end

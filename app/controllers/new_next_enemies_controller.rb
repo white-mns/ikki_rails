@@ -7,8 +7,8 @@ class NewNextEnemiesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NewNextEnemy.notnil().includes(:enemy, :area).search(params[:q]).result.hit_count()
-    @search	= NewNextEnemy.notnil().includes(:enemy, :area).page(params[:page]).search(params[:q])
+    @count	= NewNextEnemy.notnil().includes(:enemy, :area).ransack(params[:q]).result.hit_count()
+    @search	= NewNextEnemy.notnil().includes(:enemy, :area).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_next_enemies	= @search.result.per(50)
   end
@@ -19,8 +19,8 @@ class NewNextEnemiesController < ApplicationController
     param_set
     params[:q][:is_boss_eq] = 1
 
-    @count	= NewNextEnemy.notnil().includes(:enemy, :area, :new_battle, :new_defeat).search(params[:q]).result.hit_count()
-    @search	= NewNextEnemy.notnil().includes(:enemy, :area, :new_battle, :new_defeat).page(params[:page]).search(params[:q])
+    @count	= NewNextEnemy.notnil().includes(:enemy, :area, :new_battle, :new_defeat).ransack(params[:q]).result.hit_count()
+    @search	= NewNextEnemy.notnil().includes(:enemy, :area, :new_battle, :new_defeat).page(params[:page]).ransack(params[:q])
     @search.sorts = "result_no asc" if @search.sorts.empty?
     @new_next_enemies	= @search.result.per(50)
   end

@@ -7,8 +7,8 @@ class InitEquipsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= InitEquip.notnil().includes(:pc_name, item: [:kind, :effect_1, :effect_2, :effect_3]).search(params[:q]).result.hit_count()
-    @search	= InitEquip.notnil().includes(:pc_name, item: [:kind, :effect_1, :effect_2, :effect_3]).page(params[:page]).search(params[:q])
+    @count	= InitEquip.notnil().includes(:pc_name, item: [:kind, :effect_1, :effect_2, :effect_3]).ransack(params[:q]).result.hit_count()
+    @search	= InitEquip.notnil().includes(:pc_name, item: [:kind, :effect_1, :effect_2, :effect_3]).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @init_equips	= @search.result.per(50)
   end

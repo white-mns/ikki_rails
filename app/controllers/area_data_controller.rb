@@ -7,8 +7,8 @@ class AreaDataController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= AreaDatum.search(params[:q]).result.hit_count()
-    @search	= AreaDatum.page(params[:page]).search(params[:q])
+    @count	= AreaDatum.ransack(params[:q]).result.hit_count()
+    @search	= AreaDatum.page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @area_data	= @search.result.per(50)
   end

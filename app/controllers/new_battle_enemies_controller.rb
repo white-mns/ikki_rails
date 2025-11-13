@@ -7,8 +7,8 @@ class NewBattleEnemiesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NewBattleEnemy.notnil().includes(:enemy, :area).search(params[:q]).result.hit_count()
-    @search	= NewBattleEnemy.notnil().includes(:enemy, :area).page(params[:page]).search(params[:q])
+    @count	= NewBattleEnemy.notnil().includes(:enemy, :area).ransack(params[:q]).result.hit_count()
+    @search	= NewBattleEnemy.notnil().includes(:enemy, :area).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_battle_enemies	= @search.result.per(50)
   end

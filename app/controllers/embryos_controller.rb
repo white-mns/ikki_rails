@@ -7,8 +7,8 @@ class EmbryosController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Embryo.notnil().includes(:pc_name, :embryo).search(params[:q]).result.hit_count()
-    @search	= Embryo.notnil().includes(:pc_name, :embryo).page(params[:page]).search(params[:q])
+    @count	= Embryo.notnil().includes(:pc_name, :embryo).ransack(params[:q]).result.hit_count()
+    @search	= Embryo.notnil().includes(:pc_name, :embryo).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @embryos	= @search.result.per(50)
   end

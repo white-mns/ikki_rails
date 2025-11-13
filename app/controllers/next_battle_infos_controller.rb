@@ -7,8 +7,8 @@ class NextBattleInfosController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NextBattleInfo.notnil().includes([current_area: :area], [party_info: [party_members: :pc_name]], [enemy_members: :enemy]).search(params[:q]).result.hit_count()
-    @search	= NextBattleInfo.notnil().includes([current_area: :area], [party_info: [party_members: :pc_name]], [enemy_members: :enemy]).page(params[:page]).search(params[:q])
+    @count	= NextBattleInfo.notnil().includes([current_area: :area], [party_info: [party_members: :pc_name]], [enemy_members: :enemy]).ransack(params[:q]).result.hit_count()
+    @search	= NextBattleInfo.notnil().includes([current_area: :area], [party_info: [party_members: :pc_name]], [enemy_members: :enemy]).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @next_battle_infos	= @search.result.per(50)
   end

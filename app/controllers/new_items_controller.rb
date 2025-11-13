@@ -7,8 +7,8 @@ class NewItemsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NewItem.notnil().includes(:item).search(params[:q]).result.hit_count()
-    @search	= NewItem.notnil().includes(:item).page(params[:page]).search(params[:q])
+    @count	= NewItem.notnil().includes(:item).ransack(params[:q]).result.hit_count()
+    @search	= NewItem.notnil().includes(:item).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_items	= @search.result.per(50)
   end

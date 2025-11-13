@@ -7,8 +7,8 @@ class ProductionsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Production.notnil().includes(:pc_name).search(params[:q]).result.hit_count()
-    @search	= Production.notnil().includes(:pc_name).page(params[:page]).search(params[:q])
+    @count	= Production.notnil().includes(:pc_name).ransack(params[:q]).result.hit_count()
+    @search	= Production.notnil().includes(:pc_name).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @productions	= @search.result.per(50)
   end

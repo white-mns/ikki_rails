@@ -7,8 +7,8 @@ class SkillDataController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= SkillDatum.includes(:embryo, :gift).wheres(params).groups(params).search(params[:q]).result.hit_count()
-    @search	= SkillDatum.includes(:embryo, :gift).wheres(params).groups(params).page(params[:page]).search(params[:q])
+    @count	= SkillDatum.includes(:embryo, :gift).wheres(params).groups(params).ransack(params[:q]).result.hit_count()
+    @search	= SkillDatum.includes(:embryo, :gift).wheres(params).groups(params).page(params[:page]).ransack(params[:q])
     @search.sorts = ["embryo_id asc", "is_physics desc", "lv asc"] if @search.sorts.empty?
     @skill_data	= @search.result.per(50)
   end

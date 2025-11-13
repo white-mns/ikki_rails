@@ -7,8 +7,8 @@ class EmbryoNamesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= EmbryoName.search(params[:q]).result.hit_count()
-    @search	= EmbryoName.page(params[:page]).search(params[:q])
+    @count	= EmbryoName.ransack(params[:q]).result.hit_count()
+    @search	= EmbryoName.page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @embryo_names	= @search.result.per(50)
   end

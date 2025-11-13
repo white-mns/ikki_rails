@@ -7,8 +7,8 @@ class PkDataController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area]]], [next_duel_party: [party_info: [current_area: :area]]]).search(params[:q]).result.hit_count()
-    @search	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area]]], [next_duel_party: [party_info: [current_area: :area]]]).page(params[:page]).search(params[:q])
+    @count	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area]]], [next_duel_party: [party_info: [current_area: :area]]]).ransack(params[:q]).result.hit_count()
+    @search	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area]]], [next_duel_party: [party_info: [current_area: :area]]]).page(params[:page]).ransack(params[:q])
     @search.sorts = "e_no asc" if @search.sorts.empty?
     @pk_data	= @search.result.per(50)
   end

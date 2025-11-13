@@ -7,8 +7,8 @@ class CurrentAreasController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= CurrentArea.notnil().includes(:pc_name, :area).search(params[:q]).result.hit_count()
-    @search	= CurrentArea.notnil().includes(:pc_name, :area).page(params[:page]).search(params[:q])
+    @count	= CurrentArea.notnil().includes(:pc_name, :area).ransack(params[:q]).result.hit_count()
+    @search	= CurrentArea.notnil().includes(:pc_name, :area).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @current_areas	= @search.result.per(50)
   end
@@ -18,13 +18,13 @@ class CurrentAreasController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= CurrentArea.notnil().includes(:pc_name, :area).search(params[:q]).result.hit_count()
+    @count	= CurrentArea.notnil().includes(:pc_name, :area).ransack(params[:q]).result.hit_count()
 
-    @area_search = CurrentArea.notnil().includes(:pc_name, :area).group(:area_id).search(params[:q])
+    @area_search = CurrentArea.notnil().includes(:pc_name, :area).group(:area_id).ransack(params[:q])
     @area_search.sorts = "area_id asc" if @area_search.sorts.empty?
     @areas	= @area_search.result
 
-    @search	= CurrentArea.notnil().includes(:pc_name, :area).search(params[:q])
+    @search	= CurrentArea.notnil().includes(:pc_name, :area).ransack(params[:q])
     @search.sorts = "area_id asc" if @search.sorts.empty?
     @current_areas	= @search.result.area_total()
   end
@@ -37,12 +37,12 @@ class CurrentAreasController < ApplicationController
     params_pk_data = Marshal.load(Marshal.dump(params))
     params_pk_data[:q]["result_no_eq"] = sprintf("%d",@latest_result)
 
-    @search_pk_data	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area],]]).page(params_pk_data[:page]).search(params_pk_data[:q])
+    @search_pk_data	= PkDatum.notnil().distinct.includes(:pc_name, :old_pc_name, :status, [next_battle_party: [party_info: [current_area: :area],]]).page(params_pk_data[:page]).ransack(params_pk_data[:q])
     @search_pk_data.sorts = "e_no asc" if @search_pk_data.sorts.empty?
     @pk_data	= @search_pk_data.result.per(5)
 
-    @count	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [next_duel_party: [party_info: [party_members: :pc_name]]], [next_battle_party: [party_info: [party_members: :pc_name]]]).search(params[:q]).result.hit_count()
-    @search	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [next_duel_party: [party_info: [party_members: :pc_name]]], [next_battle_party: [party_info: [party_members: :pc_name]]]).page(params[:page]).search(params[:q])
+    @count	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [next_duel_party: [party_info: [party_members: :pc_name]]], [next_battle_party: [party_info: [party_members: :pc_name]]]).ransack(params[:q]).result.hit_count()
+    @search	= CurrentArea.notnil().includes(:pc_name, :area, :assault, :pk_result, [next_duel_party: [party_info: [party_members: :pc_name]]], [next_battle_party: [party_info: [party_members: :pc_name]]]).page(params[:page]).ransack(params[:q])
     @search.sorts = "result_no asc" if @search.sorts.empty?
     @current_areas	= @search.result.per(100)
   end
