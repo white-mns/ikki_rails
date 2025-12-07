@@ -18,12 +18,12 @@
     %nav.navbar.navbar-expand-md.fixed-top.navbar-light.bg-light.navbar-custom.p-0
       .container
         = link_to "IkkiFantasyデータ小屋", root_path, :class => "navbar-brand"
-        %button.navbar-toggler{type: "button", data: {bs: {toggle: "collapse", target: "#navbarNavDropdown"}}, area: {controls: "navbarNavDropdown", expanded: "false", label: "Toggle navigation"}}
+        %button.navbar-toggler{type: "button", data: {bs: {toggle: "collapse", target: "#navbarNavDropdown"}}, aria: {controls: "navbarNavDropdown", expanded: "false", label: "Toggle navigation"}}
           %span.navbar-toggler-icon
-        .collapse.navbar-collapse#navbarResponsive
+        .collapse.navbar-collapse#navbarNavDropdown
           %ul.navbar-nav
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", area: {expanded: "false"}}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 個人データ
                 %span.caret
               .dropdown-menu
@@ -40,7 +40,7 @@
                 = link_to "所持アイテム一覧", items_path, class: "dropdown-item"
                 = link_to ">　初期装備一覧", init_equips_path, class: "dropdown-item"
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", area: {expanded: "false"}}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 戦闘データ
                 %span.caret
               .dropdown-menu
@@ -49,7 +49,7 @@
                 = link_to "NPC戦勝敗一覧", battle_results_path, class: "dropdown-item"
                 = link_to "対人戦戦勝敗一覧", duel_results_path, class: "dropdown-item"
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", area: {expanded: "false"}}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 PKデータ
                 %span.caret
               .dropdown-menu
@@ -58,7 +58,7 @@
                 = link_to "次回予告デュエル一覧", next_duel_infos_path + "?is_duel=on&show_assault=1", class: "dropdown-item"
                 = link_to "デュエル勝敗一覧", duel_results_path + "?is_duel=on&show_assault=1", class: "dropdown-item"
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", area: {expanded: "false"}}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 新出データ
                 %span.caret
               .dropdown-menu
@@ -71,7 +71,7 @@
                 = link_to ">　初戦闘ボス一覧", new_battle_enemies_path + "?base_first=1&show_skill=0&is_boss=on", class: "dropdown-item"
                 = link_to "ボス初突破一覧", new_defeat_enemies_path, class: "dropdown-item"
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", area: {expanded: "false"}}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 その他データ
                 %span.caret
               .dropdown-menu
