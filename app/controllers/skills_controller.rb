@@ -23,7 +23,7 @@ class SkillsController < ApplicationController
         params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
-    params[:q]["embryo_embryo_id_not_eq"] = 0
+    #params[:q]["embryo_embryo_id_not_eq"] = 0
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
